@@ -17,6 +17,10 @@ body {
   padding: 20px;
   background-color: #0b2434;
 }
+.resend-code {
+  cursor: pointer;
+  color: blue;
+}
 main {
   background: #f5f5f5;
   height: 400px;

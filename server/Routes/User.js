@@ -8,6 +8,8 @@ const {
   getDeposits,
   updateUser,
   updatePassword,
+  resendCode,
+  resetPassord,
 } = require("../controllers/User");
 
 const router = express.Router();
@@ -20,5 +22,7 @@ router.get("/getuser/:id", getUser);
 router.get("/getdeposit/:id", getDeposits);
 router.patch("/update-user", updateUser);
 router.patch("/update-password", updatePassword);
+router.post("/resendcode", resendCode);
+router.post("/resetpassword", resetPassord);
 
 module.exports = router;

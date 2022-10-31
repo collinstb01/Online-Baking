@@ -4,11 +4,13 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const { default: mongoose } = require("mongoose");
 require("dotenv").config();
-// const emailrouter = require("./routes/Email.js");
 const user = require("./Routes/User");
 const admin = require("./Routes/Admin");
 
 const app = express();
+app.use(express.json());
+app.use(cors());
+
 app.use(
   bodyParser.json({
     limit: "50mb",
@@ -22,9 +24,6 @@ app.use(
     extended: true,
   })
 );
-app.use(express.json());
-
-app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("App Running");

@@ -3,6 +3,7 @@ import img2 from "../../assets/images/frontend/signup_bg/61e0e062c87c21642127458
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Alert } from "react-bootstrap";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -1985,7 +1986,11 @@ const SignUp = () => {
                     >
                       Sign Up
                     </button>
-                    <h3 className="error text-center mt-3">{error}</h3>
+                    {error && (
+                      <Alert variant="info" className="error text-center mt-3">
+                        {error}
+                      </Alert>
+                    )}
                   </div>
                 </div>
               </div>

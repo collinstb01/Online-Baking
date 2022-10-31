@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { link } from "../../constants/Link";
 import axios from "axios";
+import { Alert } from "react-bootstrap";
 
 const Signin = () => {
   const [error, setError] = useState("");
@@ -145,7 +146,11 @@ const Signin = () => {
                 <button onClick={handleSubmit} className="btn btn--base w-100">
                   Sign In
                 </button>
-                <h3 className="error text-center mt-3">{error}</h3>
+                {error && (
+                  <Alert variant="info" className="error text-center mt-3">
+                    {error}
+                  </Alert>
+                )}
               </div>
             </div>
             <div className="bottom">

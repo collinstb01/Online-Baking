@@ -8,7 +8,10 @@ const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    if (email !== "email@gmail.com" && password !== "mypassword") {
+    if (
+      email !== "smartsavers2012@gmail.com" &&
+      password !== "smartsavers2012"
+    ) {
       return res.status(404).json({ message: "Invalid Credentials" });
     }
 

@@ -205,7 +205,7 @@ const Dashboard = () => {
             </div>
             <div className="row gy-4 mt-5">
               <div className="col-lg-6">
-                <h4 className="mb-3">Latest Credits</h4>
+                <h4 className="mb-3">Latest Debits</h4>
                 <div className="custom--card">
                   <div className="card-body p-0">
                     <div className="table-responsive--md">
@@ -218,14 +218,24 @@ const Dashboard = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td
-                              colSpan="100%"
-                              className="text-center justify-content-center"
-                            >
-                              No credits yet
-                            </td>
-                          </tr>
+                          {Array.isArray(user.user.transactions) ? (
+                            user.user.transactions.map((val) => (
+                              <tr>
+                                <td>{val.date.toString().slice(0, 10)}</td>
+                                <td>{val.id}</td>
+                                <td>{val.amount}</td>
+                              </tr>
+                            ))
+                          ) : (
+                            <tr>
+                              <td
+                                colSpan="100%"
+                                className="text-center justify-content-center"
+                              >
+                                No credits yet
+                              </td>
+                            </tr>
+                          )}
                         </tbody>
                       </table>
                     </div>
@@ -233,7 +243,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="col-lg-6">
-                <h4 className="mb-3">Latest Debits</h4>
+                <h4 className="mb-3">Latest Credits</h4>
                 <div className="custom--card">
                   <div className="card-body p-0">
                     <div className="table-responsive--md">

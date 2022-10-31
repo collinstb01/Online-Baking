@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { link } from "../../constants/Link";
+import { Alert, Button } from "react-bootstrap";
 
 const Verify = () => {
   const [code, setCode] = useState("");
@@ -24,13 +25,35 @@ const Verify = () => {
 
       if (response.data) {
         navigate("/user/dashboard");
+        setError(response.data.message);
       }
+      console.log(error);
     } catch (error) {
       console.log(error.message);
-      setError(error.message);
+      setError(error.response.data.message);
     }
 
     console.log("sss");
+  };
+
+  const handleClick = async () => {
+    const { user } = JSON.parse(localStorage.getItem("user"));
+    try {
+      const response = await axios.post(`${link}/resendcode`, {
+        email: user.email,
+        id: user._id,
+        name: user.name,
+      });
+
+      console.log(response);
+
+      if (response.data) {
+        setError(response.data.message);
+      }
+    } catch (error) {
+      console.log(error.message);
+      setError(error.response.data.message);
+    }
   };
   return (
     <div>
@@ -60,18 +83,9 @@ const Verify = () => {
         >
           <div className="account-section-left">
             <div className="account-section-left-inner">
-              <h4 className="title text-white mb-2">
-                Create an Account to SmartsaveContribution
-              </h4>
+              <h4 className="title text-white mb-2">Verify Your Account</h4>
               <p className="text-white">
-                Please provide your valid information to register! Use a Valid
-                email account to recieve transaction Alert
-              </p>
-              <p className="mt-xl-5 mt-3 text-white">
-                Have an account?{" "}
-                <Link to="login" className="text--base">
-                  Login here
-                </Link>
+                Please provide your valid Code To Verify Your Account
               </p>
             </div>
           </div>
@@ -90,7 +104,7 @@ const Verify = () => {
                   <div className="col-lg-6 form-group">
                     <img src={img} alt="logo" />
                     <label htmlFor="firstname">
-                      Please Enter Verification Code On Your Email
+                      Please Enter Verification Code On Your Email.
                     </label>
                     <input
                       id="firstname"
@@ -107,8 +121,16 @@ const Verify = () => {
                       //   type="submit"
                       className="btn btn--base text-white w-100"
                     >
-                      Sign Up
+                      Verify
                     </button>
+                    <Button
+                      variant="secondary"
+                      className="mt-xl-5 mt-1 text-blue resend-code"
+                      onClick={handleClick}
+                    >
+                      Resend code
+                    </Button>
+                    {error && <Alert variant="info">{error}</Alert>}
                   </div>
                 </div>
               </div>

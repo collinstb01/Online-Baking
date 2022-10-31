@@ -152,15 +152,7 @@ const loginUser = async (req, res) => {
 
   if (user && isPasswordCorrect) {
     const { _id, name, email, photo, phone, bio } = user;
-    res.status(200).json({
-      _id,
-      name,
-      email,
-      photo,
-      phone,
-      bio,
-      token,
-    });
+    res.status(200).json({ message: "Succesffully Logined", user });
   } else {
     res.status(400).json({ message: "Invalid email or password" });
     throw new Error("Invalid email or password");
@@ -325,7 +317,7 @@ const updateUser = async (req, res) => {
   try {
     const user = await User.findOne({ _id: id });
     const update = await User.updateOne(
-      { id: id },
+      { _id: id },
       {
         $set: {
           img: img != "" ? img : user.img,
@@ -368,6 +360,57 @@ const updatePassword = async (req, res) => {
     console.log(error);
   }
 };
+
+const resendCode = async (req, res) => {
+  const { email, id, name } = req.body;
+  try {
+    const code = Math.floor(Math.random() * 899999 + 100000);
+
+    const update = await User.updateOne(
+      { _id: id },
+      {
+        $set: {
+          code: code,
+        },
+      }
+    );
+
+    await sendEmailToUser(req, res, name, code, email);
+
+    res.status(200).json({ message: "Code Sent", update });
+  } catch (error) {
+    res.json({ error: error.message });
+    console.log(error);
+  }
+};
+
+const resetPassord = async (req, res) => {
+  const { id, confirmPassword, newPassword, oldPassword } = req.body;
+  try {
+    const user = await User.findOne({ id: id });
+
+    if (user.password != oldPassword) {
+      return res.status(400).json({ message: "Old Password Is not Correct" });
+    }
+
+    if (confirmPassword != newPassword) {
+      return res.status(400).json({ message: "Please Password Must Match" });
+    }
+
+    const update = await User.updateOne(
+      { _id: id },
+      {
+        $set: {
+          password: newPassword,
+        },
+      }
+    );
+    res.status(200).json({ message: "Successfully Changed Password", update });
+  } catch (error) {
+    res.json({ error: error.message });
+    console.log(error);
+  }
+};
 module.exports = {
   registerUser,
   loginUser,
@@ -378,4 +421,6 @@ module.exports = {
   getDeposits,
   updateUser,
   updatePassword,
+  resendCode,
+  resetPassord,
 };
