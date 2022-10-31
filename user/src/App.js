@@ -147,7 +147,7 @@ function App() {
           <Route path="/85-terms-of-services" element={<Policy3 />} />
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<Faq />} />
-          <Route path="/service" element={<Services />} />
+          <Route path="/services" element={<Services />} />
         </Routes>
       </div>
     </Router>

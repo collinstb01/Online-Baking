@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Withdrawal from "./pages/Withdrawal";
 import Deposit from "./pages/Deposit";
+import Users from "./pages/Users";
 
 function App() {
   return (
@@ -49,6 +50,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Deposit />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <PrivateRoute>
+                <Users />
               </PrivateRoute>
             }
           />

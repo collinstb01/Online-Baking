@@ -24,6 +24,7 @@ const Verify = () => {
       console.log(response);
 
       if (response.data) {
+        localStorage.setItem("user", JSON.stringify(response.data));
         navigate("/user/dashboard");
         setError(response.data.message);
       }
@@ -130,7 +131,11 @@ const Verify = () => {
                     >
                       Resend code
                     </Button>
-                    {error && <Alert variant="info">{error}</Alert>}
+                    {error && (
+                      <Alert variant="info" className="mt-3">
+                        {error}
+                      </Alert>
+                    )}
                   </div>
                 </div>
               </div>

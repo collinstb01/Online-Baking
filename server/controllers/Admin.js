@@ -157,6 +157,16 @@ const getDashboardData = async (req, res) => {
     console.log(error);
   }
 };
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+
+    return res.status(200).json({ message: "Gotten", users });
+  } catch (error) {
+    res.json({ error: error.message });
+    console.log(error);
+  }
+};
 
 module.exports = {
   getDeposits,
@@ -164,5 +174,6 @@ module.exports = {
   updateKycStatus,
   updateDepositStatus,
   loginAdmin,
+  getUsers,
   getDashboardData,
 };

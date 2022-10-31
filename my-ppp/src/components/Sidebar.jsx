@@ -27,6 +27,13 @@ const Sidebar = () => {
           </Link>
         </li>
 
+        <li className="nav-item">
+          <Link className="nav-link" to="/users">
+            <i className="fa fa-users menu-icon"></i>
+            <span className="menu-title">Users</span>
+          </Link>
+        </li>
+
         {/* <li className="nav-item">
             <Link className="nav-link" data-toggle="collapse" to="#error" aria-expanded="false" aria-controls="error">
               <i className="fa fa-exclamation-circle menu-icon"></i>

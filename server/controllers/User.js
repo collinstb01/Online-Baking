@@ -4,6 +4,9 @@ const asyncHandler = require("express-async-handler");
 const Deposits = require("../Schema/Deposit");
 const sendEmail = require("../utils/sendEmail");
 const { Mongoose } = require("mongoose");
+const path = require("path");
+const fs = require("fs");
+const handlebars = require("handlebars");
 
 const generateToken = (id) => {
   return jwt.sign({ id }, "test", { expiresIn: "1d" });
@@ -161,17 +164,18 @@ const loginUser = async (req, res) => {
 
 const sendEmailToUser = async (req, res, name, code, email) => {
   console.log(name, email);
-  const message = `
-      <h2>Hello ${name}</h2>
-      <p>Please use the url below to reset your password</p>  
-      <p>This reset link is valid for only 30minutes.</p>
 
-      <h3>Your code is ${code}</h3>
+  const filePath = path.join(__dirname, "../template.html");
+  const source = fs.readFileSync(filePath, "utf-8").toString();
+  const template = handlebars.compile(source);
+  const replacements = {
+    name: name,
+    code: code,
+  };
+  const htmlToSend = template(replacements);
 
-      <p>Regards...</p>
-      <p>Pinvent Team</p
-    `;
-  const subject = "Password Reset Request";
+  const message = htmlToSend;
+  const subject = "Code Verification Request";
   const send_to = email;
   const sent_from = "cllnsflx40@gmail.com";
 
@@ -190,15 +194,15 @@ const verifyCode = async (req, res) => {
 
   console.log(code);
   try {
-    const user = await User.findOne({ _id: id });
+    const update__user = await User.findOne({ _id: id });
 
-    console.log(user);
-    if (user.code !== code) {
+    console.log(update__user);
+    if (update__user.code !== code) {
       return res.status(401).json({ message: "Code Not correct" });
     }
-    console.log(user);
+    console.log(update__user);
 
-    const updateUser = await User.updateOne(
+    await User.updateOne(
       { _id: id },
       {
         $set: {
@@ -206,10 +210,11 @@ const verifyCode = async (req, res) => {
         },
       }
     );
+    const user = await User.findOne({ _id: id });
 
     console.log(updateUser);
 
-    return res.status(200).json({ message: "Succesfully Login" });
+    return res.status(200).json({ message: "Succesfully Verified", user });
   } catch (error) {
     res.json({ error: error.message });
     console.log(error);

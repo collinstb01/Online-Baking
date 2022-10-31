@@ -223,7 +223,7 @@ const Dashboard = () => {
                               <tr>
                                 <td>{val.date.toString().slice(0, 10)}</td>
                                 <td>{val.id}</td>
-                                <td>{val.amount}</td>
+                                <td>₦{val.amount}</td>
                               </tr>
                             ))
                           ) : (
@@ -232,7 +232,7 @@ const Dashboard = () => {
                                 colSpan="100%"
                                 className="text-center justify-content-center"
                               >
-                                No credits yet
+                                No Debits yet
                               </td>
                             </tr>
                           )}

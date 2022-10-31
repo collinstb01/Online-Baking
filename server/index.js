@@ -25,6 +25,8 @@ app.use(
   })
 );
 
+console.log();
+
 app.get("/", (req, res) => {
   res.send("App Running");
 });

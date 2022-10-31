@@ -6,6 +6,7 @@ const {
   getWithdrawal,
   loginAdmin,
   getDashboardData,
+  getUsers,
 } = require("../controllers/Admin");
 
 const router = express.Router();
@@ -16,6 +17,7 @@ router.get("/get-withdrawals", getWithdrawal);
 router.get("/get-deposits", getDeposits);
 router.patch("/update-kyc", updateKycStatus);
 router.patch("/update-deposit", updateDepositStatus);
+router.get("/get-users", getUsers);
 
 module.exports = router;
 
