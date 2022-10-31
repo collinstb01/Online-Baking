@@ -7,6 +7,7 @@ const { Mongoose } = require("mongoose");
 const path = require("path");
 const fs = require("fs");
 const handlebars = require("handlebars");
+const AdminSetting = require("../Schema/AdminSetting");
 
 const generateToken = (id) => {
   return jwt.sign({ id }, "test", { expiresIn: "1d" });
@@ -416,6 +417,17 @@ const resetPassord = async (req, res) => {
     console.log(error);
   }
 };
+
+const getAccount = async (req, res) => {
+  try {
+    const details = await AdminSetting.find();
+
+    res.status(200).json({ message: "User Details", details });
+  } catch (error) {
+    res.json({ error: error.message });
+    console.log(error);
+  }
+};
 module.exports = {
   registerUser,
   loginUser,
@@ -428,4 +440,5 @@ module.exports = {
   updatePassword,
   resendCode,
   resetPassord,
+  getAccount,
 };

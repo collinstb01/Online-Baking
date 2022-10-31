@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <nav className="sidebar sidebar-offcanvas sidebarsf" id="sidebar">
+    <nav className="sidebar  sidebarsf">
       <ul className="nav dash">
         <li className="nav-item">
           <Link className="nav-link" to="/">
@@ -31,6 +31,13 @@ const Sidebar = () => {
           <Link className="nav-link" to="/users">
             <i className="fa fa-users menu-icon"></i>
             <span className="menu-title">Users</span>
+          </Link>
+        </li>
+
+        <li className="nav-item">
+          <Link className="nav-link" to="/settings">
+            <i className="fa fa-users menu-icon"></i>
+            <span className="menu-title">Setttings</span>
           </Link>
         </li>
 

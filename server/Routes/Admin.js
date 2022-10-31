@@ -7,6 +7,9 @@ const {
   loginAdmin,
   getDashboardData,
   getUsers,
+  adminSettings,
+  getSettings,
+  createSettings,
 } = require("../controllers/Admin");
 
 const router = express.Router();
@@ -18,6 +21,9 @@ router.get("/get-deposits", getDeposits);
 router.patch("/update-kyc", updateKycStatus);
 router.patch("/update-deposit", updateDepositStatus);
 router.get("/get-users", getUsers);
+router.post("/admin-setting", adminSettings);
+router.get("/get-setting", getSettings);
+router.post("/create-settings", createSettings);
 
 module.exports = router;
 

@@ -5,12 +5,17 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { link } from "../constants/Link";
+import Loader from "../components/Loader";
+import { useEffect } from "react";
+import { Alert } from "react-bootstrap";
 
 const DepositManual = () => {
   const user = localStorage.getItem("user");
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [loading, setloading] = useState(true);
+  const [dataa, setDataa] = useState([]);
 
   const [depositData, setDepositData] = useState({
     paymentImage: "",
@@ -31,9 +36,28 @@ const DepositManual = () => {
       }
     } catch (error) {
       console.log(error.message);
-      setError(error.message);
+      setError(error.response.data.message);
     }
   };
+
+  useEffect(async () => {
+    setloading(true);
+    try {
+      const response = await axios.get(`${link}/getaccount`);
+
+      console.log(response.data);
+      setDataa(response.data);
+      setloading(false);
+    } catch (error) {
+      console.log(error);
+      setError(error.response.data.message);
+      setloading(false);
+    }
+  }, []);
+
+  if (loading == true) {
+    return <Loader />;
+  }
   return (
     <div>
       <div className="preloader" style={{ opacity: 0, display: "none" }}>
@@ -242,6 +266,7 @@ const DepositManual = () => {
                                 : ""}
                             </p>
                             <p>{message && message}</p>
+                            <Alert variants="info">{error && error}</Alert>
                           </div>
                         </div>
                       </div>

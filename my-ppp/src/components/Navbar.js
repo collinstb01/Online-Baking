@@ -3,8 +3,9 @@ import img1 from "../images/faces/face2.jpg";
 import img2 from "../images/logo.svg";
 import img3 from "../images/logo-mini.svg";
 import img4 from "../images/faces/face5.jpg";
+import { Button } from "react-bootstrap";
 
-const Navbar = () => {
+const Navbar = ({ setShow }) => {
   const handleRoute = () => {
     localStorage.removeItem("admin");
   };
@@ -27,35 +28,18 @@ const Navbar = () => {
           <span className="fas fa-bars" />
         </button>
         <ul className="navbar-nav">
-          <li className="nav-item nav-search d-none d-md-flex">
+          <li className="nav-item ">
             <div className="nav-link">
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">
-                    <i className="fas fa-search" />
-                  </span>
-                </div>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-              </div>
+              {window.innerWidth <= 900 && (
+                <Button onClick={() => setShow((e) => !e)}>Menu</Button>
+              )}
             </div>
           </li>
         </ul>
         <ul className="navbar-nav navbar-nav-right">
-          <li className="nav-item dropdown d-none d-lg-flex">
+          <li className="nav-item dropdown d-lg-flex">
             <div className="nav-link">
-              <span
-                className="dropdown-toggle btn btn-outline-dark"
-                id="languageDropdown"
-                data-toggle="dropdown"
-                onClick={handleRoute}
-              >
-                Logout
-              </span>
+              <Button onClick={handleRoute}>Logout</Button>
               <div
                 className="dropdown-menu navbar-dropdown"
                 aria-labelledby="languageDropdown"
@@ -79,15 +63,6 @@ const Navbar = () => {
             </div>
           </li>
           <li className="nav-item dropdown">
-            <a
-              className="nav-link count-indicator dropdown-toggle"
-              id="notificationDropdown"
-              href="#"
-              data-toggle="dropdown"
-            >
-              <i className="fas fa-bell mx-0" />
-              <span className="count">16</span>
-            </a>
             <div
               className="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
               aria-labelledby="notificationDropdown"

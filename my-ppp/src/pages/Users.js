@@ -30,25 +30,6 @@ const Users = () => {
     setStatus(e.target.value);
   };
 
-  const handlMake = async () => {
-    setmessage("updating...");
-    try {
-      const response = await axios.patch(`${link}/admin/update-deposit`, {
-        id,
-        amount,
-        status,
-        userId,
-      });
-      console.log(response.data);
-      if (response.data) {
-        setmessage("updated, User has been credited" + " " + amount);
-      }
-    } catch (error) {
-      console.log(error);
-      setloading("Please Try Again Failed To updated");
-    }
-  };
-
   console.log(amount, status, id);
   useEffect(async () => {
     setloading(true);

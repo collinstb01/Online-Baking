@@ -10,6 +10,7 @@ const {
   updatePassword,
   resendCode,
   resetPassord,
+  getAccount,
 } = require("../controllers/User");
 
 const router = express.Router();
@@ -24,5 +25,6 @@ router.patch("/update-user", updateUser);
 router.patch("/update-password", updatePassword);
 router.post("/resendcode", resendCode);
 router.post("/resetpassword", resetPassord);
+router.get("/getaccount", getAccount);
 
 module.exports = router;

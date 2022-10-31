@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Withdrawal from "./pages/Withdrawal";
 import Deposit from "./pages/Deposit";
 import Users from "./pages/Users";
+import AdminSettings from "./pages/AddminSettings";
 
 function App() {
   return (
@@ -58,6 +59,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Users />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <AdminSettings />
               </PrivateRoute>
             }
           />

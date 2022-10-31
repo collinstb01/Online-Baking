@@ -1,6 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import "bootstrap/js/dist/collapse.js";
+import "bootstrap/js/dist/tooltip.js";
+import "bootstrap/js/dist/popover.js";
 import "./assets/templates/basic/css/main.css";
 import "./assets/templates/basic/css/color08cf.css";
 import "./assets/templates/basic/css/all.min.css";

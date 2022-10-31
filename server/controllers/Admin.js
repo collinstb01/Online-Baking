@@ -1,5 +1,6 @@
 // const
 
+const AdminSetting = require("../Schema/AdminSetting");
 const Deposits = require("../Schema/Deposit");
 const User = require("../Schema/User");
 const withdrawal = require("../Schema/Withdrawals");
@@ -8,10 +9,9 @@ const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    if (
-      email !== "smartsavers2012@gmail.com" &&
-      password !== "smartsavers2012"
-    ) {
+    const admin = await AdminSetting.find();
+
+    if (email !== admin[0].email && password !== admin[0].password) {
       return res.status(404).json({ message: "Invalid Credentials" });
     }
 
@@ -168,6 +168,76 @@ const getUsers = async (req, res) => {
   }
 };
 
+const adminSettings = async (req, res) => {
+  const { password, email, accountnumber, accountName, nameOfAccount } =
+    req.body;
+
+  console.log({ password, email, accountnumber, accountName, nameOfAccount });
+  let id = "6360008e751217b021cc410e";
+
+  try {
+    const settings = await AdminSetting.find({
+      _id: id,
+    });
+
+    console.log(settings);
+    const update = await AdminSetting.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          password: password !== "" ? password : settings[0].password,
+          email: email !== "" ? email : settings[0].email,
+          accountnumber:
+            accountnumber !== "" ? accountnumber : settings[0].accountnumber,
+          accountName:
+            accountName !== "" ? accountName : settings[0].accountName,
+          nameOfAccount:
+            nameOfAccount !== "" ? nameOfAccount : settings[0].nameOfAccount,
+        },
+      }
+    );
+
+    console.log(update);
+
+    res.status(200).json({ message: "Updated" });
+  } catch (error) {
+    res.json({ error: error.message });
+    console.log(error);
+  }
+};
+
+const createSettings = async (req, res) => {
+  const { password, email, accountnumber, accountName, nameOfAccount } =
+    req.body;
+  try {
+    const settings = new AdminSetting({
+      password,
+      email,
+      accountnumber,
+      accountName,
+      nameOfAccount,
+    });
+
+    await settings.save();
+    return res.status(200).json({ message: "Successfully Saved", settings });
+  } catch (error) {
+    res.json({ error: error.message });
+    console.log(error);
+  }
+};
+
+const getSettings = async (req, res) => {
+  try {
+    const settings = await AdminSetting.find();
+
+    return res.status(200).json({ message: "Successfully Gotten", settings });
+  } catch (error) {
+    res.json({ error: error.message });
+    console.log(error);
+  }
+};
 module.exports = {
   getDeposits,
   getWithdrawal,
@@ -176,4 +246,7 @@ module.exports = {
   loginAdmin,
   getUsers,
   getDashboardData,
+  adminSettings,
+  getSettings,
+  createSettings,
 };
