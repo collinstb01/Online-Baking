@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Alert } from "react-bootstrap";
+import { link } from "../../constants/Link";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -33,10 +34,7 @@ const SignUp = () => {
   console.log(formData);
   const createAcc = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:5001/api/signup",
-        formData
-      );
+      const response = await axios.post(`${link}/signup`, formData);
 
       console.log(response);
 
@@ -47,7 +45,9 @@ const SignUp = () => {
       }
     } catch (error) {
       console.log(error);
-      setError(error.response.data.message);
+      setError(
+        "Something Went Wrong, Check Your Email Address and Username and try again later"
+      );
     }
 
     // dispatch(signUpFunc(formData, navigate));
@@ -67,7 +67,8 @@ const SignUp = () => {
         <section
           className="account-section registration-section bg_img"
           style={{
-            backgroundImage: `url(${img2})`,
+            backgroundPosition: "right",
+            backgroundImage: `url(https://t4.ftcdn.net/jpg/02/83/42/57/360_F_283425759_mMxQWQOzBV8KZ0cqFAMTGLX3NBFadelF.jpg)`,
           }}
         >
           <div className="account-section-left">

@@ -35,7 +35,7 @@ const Signin = () => {
         navigate("/user/dashboard");
       }
     } catch (error) {
-      if (error.response.status == 401) {
+      if (error.status == 401) {
         navigate("/authorization");
         localStorage.setItem("user", JSON.stringify(error.response.data));
         return;
@@ -60,7 +60,8 @@ const Signin = () => {
         <section
           className="account-section bg_img"
           style={{
-            backgroundImage: `url(${img2})`,
+            backgroundPosition: "right",
+            backgroundImage: `url(https://t4.ftcdn.net/jpg/02/83/42/57/360_F_283425759_mMxQWQOzBV8KZ0cqFAMTGLX3NBFadelF.jpg)`,
           }}
         >
           <div className="account-section-left">

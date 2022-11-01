@@ -36,7 +36,7 @@ const DepositManual = () => {
       }
     } catch (error) {
       console.log(error.message);
-      setError(error.response.data.message);
+      setError("Unable To Upload File...");
     }
   };
 
@@ -146,19 +146,23 @@ const DepositManual = () => {
                           <div align="center">make deposit to this account</div>
                           <div align="center">
                             <b>
-                              <font size={4}>ogie etinosa</font>
-                            </b>
-                          </div>
-                          <div align="center">
-                            <b>
                               <font size={4}>
-                                zenith bank <br />
+                                {dataa.details[0].accountName}
                               </font>
                             </b>
                           </div>
                           <div align="center">
                             <b>
-                              <font size={4}>2008803834</font>
+                              <font size={4}>
+                                {dataa.details[0].nameOfAccount}
+                              </font>
+                            </b>
+                          </div>
+                          <div align="center">
+                            <b>
+                              <font size={4}>
+                                {dataa.details[0].accountnumber}
+                              </font>
                             </b>
                           </div>
                           <div align="center">
@@ -266,7 +270,9 @@ const DepositManual = () => {
                                 : ""}
                             </p>
                             <p>{message && message}</p>
-                            <Alert variants="info">{error && error}</Alert>
+                            {error && (
+                              <Alert variants="info">{error && error}</Alert>
+                            )}
                           </div>
                         </div>
                       </div>

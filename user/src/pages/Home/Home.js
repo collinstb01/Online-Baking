@@ -1,4 +1,3 @@
-import img from "../../assets/images/frontend/banner/61e0e20426fad1642127876.jpg";
 import img2 from "../../assets/images/logoIcon/logo.png";
 import img3 from "../../assets/templates/basic/images/elements/white-wave-1.png";
 import img4 from "../../assets/images/frontend/about/61e0df8bf121e1642127243.jpg";
@@ -95,9 +94,9 @@ const Home = () => {
         <div className="header__bottom">
           <div className="container">
             <nav className="navbar navbar-expand-lg p-0 align-items-center justify-content-between">
-              <a className="site-logo site-title" href="index.html">
+              <Link className="site-logo site-title" to="/">
                 <img src={img2} alt="logo" />
-              </a>
+              </Link>
               <button
                 className="navbar-toggler"
                 type="button"
@@ -166,7 +165,7 @@ const Home = () => {
         <section
           className="hero bg_img"
           style={{
-            backgroundImage: `url(${img})`,
+            backgroundImage: `url(https://c8.alamy.com/zooms/9/399177ed1f724f66b1f3c474cef6903a/mf3djm.jpg)`,
           }}
         >
           <div className="hero__wave-shape">
@@ -195,15 +194,16 @@ const Home = () => {
                 >
                   Best Secure Platform to Earn Save And Flex
                 </p>
-                <Button
-                  variant="secondary"
-                  href="register.html"
-                  className="btn custom--bg text-white mt-4 wow fadeInUp"
-                  data-wow-duration="0.5s"
-                  data-wow-delay="0.3s"
-                >
-                  Create an Account
-                </Button>
+                <Link to="signup">
+                  <Button
+                    variant="secondary"
+                    className="btn custom--bg text-white mt-4 wow fadeInUp"
+                    data-wow-duration="0.5s"
+                    data-wow-delay="0.3s"
+                  >
+                    Create an Account
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -286,7 +286,10 @@ const Home = () => {
             <div className="row gy-5">
               <div className="col-lg-6">
                 <div className="about-thumb rounded-3">
-                  <img src={img4} alt="image" />
+                  <img
+                    src="https://t4.ftcdn.net/jpg/02/83/42/57/360_F_283425759_mMxQWQOzBV8KZ0cqFAMTGLX3NBFadelF.jpg"
+                    alt="image"
+                  />
                   <a
                     href="https://www.youtube.com/embed/aFYlAzQHnY4"
                     data-rel="lightcase:myCollection"

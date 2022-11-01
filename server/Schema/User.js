@@ -47,7 +47,6 @@ const userSchema = mongoose.Schema(
     username: {
       type: String,
       required: [true, "Please Enter a Value"],
-      unique: [true, "Username Already Taken"],
     },
     zip: {
       type: String,

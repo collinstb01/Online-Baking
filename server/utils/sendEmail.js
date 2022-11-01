@@ -7,11 +7,11 @@ const sendEmail = async (subject, message, send_to, sent_from, reply_to) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "cllnsflx40@gmail.com",
-      pass: "rccvdiseokhsaeuv",
+      user: "smartsavers021@gmail.com",
+      pass: "emanfwmxzpmrwnvv",
     },
   });
-
+  // emanfwmxzpmrwnvv;
   console.log("sending....");
   // Option for sending email
   const options = {

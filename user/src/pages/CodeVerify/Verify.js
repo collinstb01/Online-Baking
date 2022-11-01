@@ -79,7 +79,8 @@ const Verify = () => {
         <section
           className="account-section registration-section bg_img"
           style={{
-            backgroundImage: `url(${img2})`,
+            backgroundPosition: "right",
+            backgroundImage: `url(https://t4.ftcdn.net/jpg/02/83/42/57/360_F_283425759_mMxQWQOzBV8KZ0cqFAMTGLX3NBFadelF.jpg)`,
           }}
         >
           <div className="account-section-left">
@@ -92,19 +93,20 @@ const Verify = () => {
           </div>
           <div className="account-section-right">
             <div className="top text-center">
-              <a href="index.html" className="account-logo"></a>
+              <Link to="/" className="account-logo"></Link>
             </div>
             <div className="middle">
               <div className="account-form">
                 <div className="row">
-                  {/* <input
-                    type="hidden"
-                    name="_token"
-                    defaultValue="rOBjMAxdCR01yJoUltm8BYpyBopYz7V5nNJBmHqQ"
-                  /> */}
                   <div className="col-lg-6 form-group">
-                    <img src={img} alt="logo" />
-                    <label htmlFor="firstname">
+                    <img
+                      src={img}
+                      alt="logo"
+                      onClick={() => {
+                        navigate("/");
+                      }}
+                    />
+                    <label htmlFor="firstname d-block">
                       Please Enter Verification Code On Your Email.
                     </label>
                     <input
@@ -124,9 +126,18 @@ const Verify = () => {
                     >
                       Verify
                     </button>
+                    <h5
+                      className="font-bold mt-2"
+                      onClick={() => {
+                        localStorage.removeItem("user");
+                        navigate("/signup");
+                      }}
+                    >
+                      Create A New Account
+                    </h5>
                     <Button
                       variant="secondary"
-                      className="mt-xl-5 mt-1 text-blue resend-code"
+                      className="mt-xl-5 text-blue resend-code"
                       onClick={handleClick}
                     >
                       Resend code

@@ -4,10 +4,13 @@ import img2 from "../images/logo.svg";
 import img3 from "../images/logo-mini.svg";
 import img4 from "../images/faces/face5.jpg";
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ setShow }) => {
+  const navigate = useNavigate();
   const handleRoute = () => {
-    localStorage.removeItem("admin");
+    localStorage.removeItem("user");
+    navigate("/login");
   };
   return (
     <nav className="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row default-layout-navbar">
