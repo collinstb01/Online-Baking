@@ -103,7 +103,7 @@ const Dashboard = () => {
                   <span className="caption text-white mb-3">
                     Available Balance
                   </span>
-                  <h3 className="d-number text-white">{`₦${user.user.accountBalance}`}</h3>
+                  <h3 className="d-number text-white">{`$${user.user.accountBalance}`}</h3>
                 </div>
                 {/* d-widget end */}
               </div>
@@ -120,7 +120,7 @@ const Dashboard = () => {
                     }}
                   >
                     <div className="d-widget__content">
-                      <h3 className="d-number text-white">{`₦${user.user.accountBalance}`}</h3>
+                      <h3 className="d-number text-white">{`$${user.user.accountBalance}`}</h3>
                       <span className="caption text-white">Deposits</span>
                     </div>
                     <div className="d-widget__icon border-radius--100">
@@ -140,7 +140,7 @@ const Dashboard = () => {
                     }}
                   >
                     <div className="d-widget__content">
-                      <h3 className="d-number text-white">₦0.00</h3>
+                      <h3 className="d-number text-white">$0.00</h3>
                       <span className="caption text-white">Withdrawals</span>
                     </div>
                     <div className="d-widget__icon border-radius--100">
@@ -223,7 +223,7 @@ const Dashboard = () => {
                               <tr>
                                 <td>{val.date.toString().slice(0, 10)}</td>
                                 <td>{val.id}</td>
-                                <td>₦{val.amount}</td>
+                                <td>${val.amount}</td>
                               </tr>
                             ))
                           ) : (

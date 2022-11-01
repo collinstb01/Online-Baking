@@ -134,11 +134,11 @@ const Contact = () => {
                           <i className="las la-user" />
                           <input
                             name="name"
-                            id="name"
+                            // id="name"
                             type="text"
                             placeholder="Your Name"
                             className="form--control"
-                            defaultValue
+                            // defaultValue
                             required
                           />
                         </div>
@@ -149,11 +149,11 @@ const Contact = () => {
                           <i className="las la-envelope" />
                           <input
                             name="email"
-                            id="email"
+                            // id="email"
                             type="text"
                             placeholder="Enter E-Mail Address"
                             className="form--control"
-                            defaultValue
+                            // defaultValue
                             required
                           />
                         </div>
@@ -164,11 +164,11 @@ const Contact = () => {
                           <i className="las la-clipboard-list" />
                           <input
                             name="subject"
-                            id="subject"
+                            // id="subject"
                             type="text"
                             placeholder="Write your subject"
                             className="form--control"
-                            defaultValue
+                            // defaultValue
                             required
                           />
                         </div>
@@ -209,7 +209,7 @@ const Contact = () => {
                   </div>
                   <div className="contact-info-card__content">
                     <h4 className="title">Office Address</h4>
-                    <a href="javascript:void(0)">benin city edo state</a>
+                    <a href="javascript:void(0)"> Bronx, Kings, New York</a>
                   </div>
                 </div>
                 {/* contact-info-card end */}
@@ -221,9 +221,7 @@ const Contact = () => {
                   </div>
                   <div className="contact-info-card__content">
                     <h4 className="title">Email Address</h4>
-                    <a href="javascript:void(0)">
-                      contact@smartsavecontribution.com
-                    </a>
+                    <a href="javascript:void(0)">smartsavers021@gmail.com</a>
                   </div>
                 </div>
                 {/* contact-info-card end */}
@@ -235,7 +233,7 @@ const Contact = () => {
                   </div>
                   <div className="contact-info-card__content">
                     <h4 className="title">Mobile Number</h4>
-                    <a href="javascript:void(0)">09027670927</a>
+                    <a href="javascript:void(0)"> +1 (707) 346-4639 </a>
                   </div>
                 </div>
                 {/* contact-info-card end */}
