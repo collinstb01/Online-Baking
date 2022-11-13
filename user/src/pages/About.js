@@ -266,11 +266,11 @@ const About = () => {
                     We provide our banking services all over the world
                   </h2>
                   <p className="mt-3 text-white">
-                    Smart Save Contribution is a saving platform own by private
-                    individual. in this platform you earn while saving for
-                    various reason. it encourages you to save and reach your
-                    goals. founded in 2018 and it has help so many individual
-                    reach their saving goals
+                    Smart Save is a saving platform own by private individual.
+                    in this platform you earn while saving for various reason.
+                    it encourages you to save and reach your goals. founded in
+                    2018 and it has help so many individual reach their saving
+                    goals
                   </p>
                 </div>
               </div>

@@ -46,7 +46,9 @@ const SignUp = () => {
     } catch (error) {
       console.log(error);
       setError(
-        "Something Went Wrong, Check Your Email Address and Username and try again later"
+        error.response
+          ? error.response.data.message
+          : "Something Went Wrong, Check Your Email Address and Username and try again later"
       );
     }
 
@@ -74,7 +76,7 @@ const SignUp = () => {
           <div className="account-section-left">
             <div className="account-section-left-inner">
               <h4 className="title text-white mb-2">
-                Create an Account to SmartsaveContribution
+                Create an Account to Smartsave
               </h4>
               <p className="text-white">
                 Please provide your valid information to register! Use a Valid

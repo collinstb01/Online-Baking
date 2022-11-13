@@ -99,13 +99,9 @@ function App() {
           <Route
             path="/user/deposit/manual"
             element={
-              amout ? (
-                <PrivateRoute>
-                  <DepositManual />
-                </PrivateRoute>
-              ) : (
-                <Navigate to="/user/deposit" replace={true} />
-              )
+              <PrivateRoute>
+                <DepositManual />
+              </PrivateRoute>
             }
           />
 

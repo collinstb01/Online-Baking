@@ -76,7 +76,7 @@ const Dashboard = () => {
                           <i className="icon-sm fas fa-cloud-download-alt mr-2" />
                           Total Amount Deposited
                         </p>
-                        <h2>₦{dataa.amount}</h2>
+                        <h2>${dataa.amount}</h2>
                         <label className="badge badge-outline-success badge-pill">
                           12% increase
                         </label>

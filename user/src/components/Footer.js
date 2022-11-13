@@ -19,11 +19,10 @@ const Footer = () => {
             <div className="footer-widget">
               <h3 className="footer-widget__title">About Us</h3>
               <p>
-                Smart Save Contribution is a saving platform own by private
-                individual. in this platform you earn while saving for various
-                reason. it encourages you to save and reach your goals. founded
-                in 2016 and it has help so many individual reach their saving
-                goals
+                Smart Save is a saving platform own by private individual. in
+                this platform you earn while saving for various reason. it
+                encourages you to save and reach your goals. founded in 2016 and
+                it has help so many individual reach their saving goals
               </p>
               <ul className="social-media-links d-flex align-items-center mt-3">
                 <li>
@@ -87,14 +86,14 @@ const Footer = () => {
               <ul className="footer-info-list">
                 <li>
                   <i className="fas fa-map-marked" />{" "}
-                  <p>benin city edo state</p>
+                  <p> Bronx, Kings, New York</p>
                 </li>
                 <li>
                   <i className="fas fa-envelope" />{" "}
-                  <p>contact@smartsavecontribution.com</p>
+                  <p>smartsavers021@gmail.com</p>
                 </li>
                 <li>
-                  <i className="fas fa-headphones" /> <p>09027670927</p>
+                  <i className="fas fa-headphones" /> <p>+1 (707) 346-4639</p>
                 </li>
               </ul>
             </div>

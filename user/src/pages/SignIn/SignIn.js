@@ -35,13 +35,15 @@ const Signin = () => {
         navigate("/user/dashboard");
       }
     } catch (error) {
-      if (error.status == 401) {
+      if (error.response.status == 401) {
         navigate("/authorization");
         localStorage.setItem("user", JSON.stringify(error.response.data));
         return;
       }
       console.log(error);
-      setError(error.response.data.message);
+      setError(
+        error.response ? error.response.data.message : "Something Went Wrong"
+      );
     }
   };
 
@@ -67,7 +69,7 @@ const Signin = () => {
           <div className="account-section-left">
             <div className="account-section-left-inner">
               <h4 className="title text-white mb-2">
-                Welcome to the Smart Save Contribution
+                Welcome to the Smart Save
               </h4>
               <p className="text-white">
                 whenever you forget your password use the button bellow to reset

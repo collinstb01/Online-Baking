@@ -8,10 +8,7 @@ const path = require("path");
 const fs = require("fs");
 const handlebars = require("handlebars");
 const AdminSetting = require("../Schema/AdminSetting");
-
-const generateToken = (id) => {
-  return jwt.sign({ id }, "test", { expiresIn: "1d" });
-};
+const nodemailer = require("nodemailer");
 // Register User
 
 const registerUser = async (req, res) => {
@@ -44,29 +41,30 @@ const registerUser = async (req, res) => {
     !password)
   ) {
     res.status(400);
-    throw new Error("Please fill in all required fields");
   }
   if (password.length < 6) {
-    res.status(400);
-    throw new Error("Password must be up to 6 characters");
+    return res
+      .status(400)
+      .json({ message: "Password must be up to 6 characters" });
   }
 
   if (password !== password_confirmation) {
-    res.status(400);
-    throw new Error("Password Doesnt Match");
+    return res.status(400).json({ message: "Password Doesnt Match" });
   }
 
-  if (agree !== true) {
-    res.status(400);
-    throw new Error("Please Agreed to our terms and policy");
+  if (agree != true) {
+    return res
+      .status(400)
+      .json({ message: "Please Agree to terms and Policy" });
   }
 
   // Check if user email already exists
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.status(400).json({ message: "Email has already been registered" });
-    throw new Error("Email has already been registered");
+    return res
+      .status(400)
+      .json({ message: "Email has already been registered" });
   }
 
   const code = Math.floor(Math.random() * 899999 + 100000);
@@ -93,66 +91,54 @@ const registerUser = async (req, res) => {
   await sendEmailToUser(req, res, name, code, email);
 
   //   Generate Token
-  const token = generateToken(user._id);
-
-  // Send HTTP-only cookie
-  res.cookie("token", token, {
-    path: "/",
-    httpOnly: true,
-    expires: new Date(Date.now() + 1000 * 86400), // 1 day
-    sameSite: "none",
-    secure: true,
-  });
 
   if (user) {
-    res.status(200).json({
+    return res.status(200).json({
       message: "successful",
       user,
     });
   } else {
-    res.status(400).json({ message: error.message });
-    throw new Error("Invalid user data");
+    return res.status(400).json({ message: error.message });
   }
 };
 
 // Login User
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
-  console.log(password, email);
+  try {
+    const { email, password } = req.body;
+    console.log(password, email);
 
-  // Validate Request
-  if (!email || !password) {
-    res.status(400).json({ message: "Please add email and password" });
-    throw new Error("Please add email and password");
-  }
+    // Validate Request
+    if (!email || !password) {
+      return res.status(400).json({ message: "Please add email and password" });
+    }
 
-  // Check if user exists
-  const user = await User.findOne({ email });
+    // Check if user exists
+    const user = await User.findOne({ email });
 
-  if (!user) {
-    res.status(400).json({ message: "User not found, please signup" });
-    throw new Error("User not found, please signup");
-  }
+    if (!user) {
+      return res.status(400).json({ message: "User not found, please signup" });
+    }
 
-  // User exists, check if password is correct
-  const isPasswordCorrect = password == user.password;
-  //   Generate Token
-  const token = generateToken(user._id);
+    // User exists, check if password is correct
+    const isPasswordCorrect = password == user.password;
+    //   Generate Token
 
-  // Send HTTP-only cookie
+    // Send HTTP-only cookie
 
-  if (user.emailVerifycation == false) {
-    return res
-      .status(401)
-      .json({ message: "Please Verify Your Account", user });
-  }
+    if (user.emailVerifycation == false) {
+      return res
+        .status(401)
+        .json({ message: "Please Verify Your Account", user });
+    }
 
-  if (user && isPasswordCorrect) {
-    const { _id, name, email, photo, phone, bio } = user;
-    res.status(200).json({ message: "Succesffully Logined", user });
-  } else {
-    res.status(400).json({ message: "Invalid email or password" });
-    throw new Error("Invalid email or password");
+    if (user && isPasswordCorrect) {
+      return res.status(200).json({ message: "Succesffully Logined", user });
+    } else {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -168,18 +154,35 @@ const sendEmailToUser = async (req, res, name, code, email) => {
   };
   const htmlToSend = template(replacements);
 
-  const message = htmlToSend;
-  const subject = "Code Verification Request";
-  const send_to = email;
-  const sent_from = "smartsavers021@gmail.com";
-
   try {
-    sendEmail(subject, message, send_to, sent_from);
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "smartsavers021@gmail.com",
+        pass: "emanfwmxzpmrwnvv", // generated ethereal password
+        // pass: "nktwzmvxyemczgow", // generated ethereal password
+      },
+    });
+
+    let info = await transporter.sendMail({
+      from: `smartsavers021@gmail.com`, // sender address
+      // from: `"${subject}" <${EMAIL__ADDRESS}>`, // sender address
+      to: email, // list of receivers
+      bcc: email,
+      subject: `Code Verification Request`, // Subject line
+      // text: `${htmlToSend}`, // plain text body
+      html: `${htmlToSend}`, // html body
+    });
+
+    console.log("Message sent: %s", info.messageId);
+    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+    // Preview only available when sending through an Ethereal account
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     // res.status(201).json({ success: true, message: "Reset Email Sent" });
   } catch (error) {
     console.log(error);
     // res.json({ error });
-    // throw new Error("Email not sent, please try again");
   }
 };
 
