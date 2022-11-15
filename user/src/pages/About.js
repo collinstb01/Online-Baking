@@ -49,7 +49,7 @@ const About = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className to="/service">
+                    <Link className to="/services">
                       Services
                     </Link>
                   </li>
@@ -111,7 +111,7 @@ const About = () => {
               <div className="col-lg-6">
                 <div className="about-thumb rounded-3">
                   <img
-                    src="https://smartsavecontribution.com/assets/images/frontend/about/61e0df8bf121e1642127243.jpg"
+                    src="https://t4.ftcdn.net/jpg/02/83/42/57/360_F_283425759_mMxQWQOzBV8KZ0cqFAMTGLX3NBFadelF.jpg"
                     alt="image"
                   />
                   <a

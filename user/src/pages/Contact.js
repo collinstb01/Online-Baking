@@ -50,7 +50,7 @@ const Contact = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className to="/service">
+                    <Link className to="/services">
                       Services
                     </Link>
                   </li>

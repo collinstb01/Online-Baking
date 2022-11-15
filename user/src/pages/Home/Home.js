@@ -21,75 +21,8 @@ const Home = () => {
         </div>
       </div>
       {/* header-section start  */}
-      <header className="header">
-        <div className="header__bottom">
-          <div className="container">
-            <nav className="navbar navbar-expand-lg p-0 align-items-center justify-content-between">
-              <a className="site-logo site-title" href="index.html">
-                <img src={img2} alt="logo" />
-              </a>
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="menu-toggle" />
-              </button>
-              <div
-                className="collapse navbar-collapse mt-xl-0 mt-3"
-                id="navbarSupportedContent"
-              >
-                <ul className="navbar-nav main-menu m-auto" id="linkItem">
-                  <li>
-                    <Link className="active" to="/">
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className to="/about">
-                      About Us
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className to="/services">
-                      Services
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className to="/faq">
-                      FAQ
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className to="/contact">
-                      Contact
-                    </Link>
-                  </li>
-                </ul>
-                <div className="nav-right">
-                  <Link
-                    to="/login"
-                    className="btn btn-sm py-2 btn-outline--gradient me-3 text-white"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    to="/signup"
-                    className="btn btn-sm py-2 custom--bg text-white"
-                  >
-                    Sign Up
-                  </Link>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </div>
-        {/* header__bottom end */}
-      </header>
+
+      {/* header__bottom end */}
       <header className="header">
         <div className="header__bottom">
           <div className="container">
@@ -124,7 +57,7 @@ const Home = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className to="/service">
+                    <Link className to="/services">
                       Services
                     </Link>
                   </li>
