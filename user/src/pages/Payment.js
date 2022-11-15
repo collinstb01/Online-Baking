@@ -133,28 +133,35 @@ const Payment = () => {
                   <div className="card-body">
                     <ul className="caption-list text-center">
                       <li className="justify-content-center">
-                        <img
-                          src="https://smartsavecontribution.com/assets/images/gateway/61e0de54629901642126932.jpg"
-                          alt="Image"
-                          className="w-50 mb-3"
-                        />
+                        <div className="div d-flex">
+                          <img
+                            src={require("./dollar.png")}
+                            alt="Image"
+                            className="img1"
+                          />
+                          <img
+                            src={require("./smart.jpg")}
+                            alt="Image"
+                            className="w-50 img2"
+                          />
+                        </div>
                       </li>
                       <li className="justify-content-between">
                         Amount:
-                        <strong>{paymentData.amount} NGN</strong>
+                        <strong>{paymentData.amount} USD</strong>
                       </li>
                       <li className="justify-content-between">
                         Charge:
-                        <strong>0 NGN</strong>
+                        <strong>0 USD</strong>
                       </li>
                       <li className="justify-content-between">
                         Payable: <strong> {paymentData.amount}</strong>
                       </li>
                       <li className="justify-content-between">
-                        Conversion Rate: <strong>1 NGN = 1 NGN</strong>
+                        Conversion Rate: <strong>1 USD = 1 USD</strong>
                       </li>
                       <li className="justify-content-between">
-                        In NGN:
+                        In USD:
                         <strong>{paymentData.amount}</strong>
                       </li>
                     </ul>

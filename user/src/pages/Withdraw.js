@@ -162,7 +162,7 @@ const Withdraw = () => {
                       Select One
                     </option>
                     <option
-                      data-currency="NGN"
+                      data-currency="USD"
                       data-min_amount={1000}
                       data-max_amount={2000000}
                       data-fix_charge={0}
@@ -196,7 +196,7 @@ const Withdraw = () => {
                       required
                     />
                     <span className="input-group-text bg--base text-white border--base">
-                      NGN
+                      USD
                     </span>
                   </div>
                 </div>

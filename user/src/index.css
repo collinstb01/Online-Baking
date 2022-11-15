@@ -17,6 +17,15 @@ body {
   padding: 20px;
   background-color: #0b2434;
 }
+.img1 {
+  width: 50px;
+  position: absolute;
+  left: 80px;
+}
+.div {
+  flex-direction: column;
+}
+
 .resend-code {
   cursor: pointer;
   color: blue;
