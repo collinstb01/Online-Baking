@@ -8,7 +8,7 @@ const Navbar = () => {
           <nav className="navbar navbar-expand-lg p-0 align-items-center justify-content-between">
             <Link className="site-logo site-title" to="/">
               <img
-                src="https://smartsavecontribution.com/assets/images/logoIcon/logo.png"
+                src={`${require("../assets/images/logoIcon/logo.png")}`}
                 alt="logo"
               />
             </Link>

@@ -1,7 +1,13 @@
+import { useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import Example from "./Modal";
 
 const Withdraw = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <div>
       <div className="preloader" style={{ opacity: 0, display: "none" }}>
@@ -49,9 +55,10 @@ const Withdraw = () => {
               <div className="col-6 text-end">
                 <button
                   type="button"
-                  data-bs-toggle="modal"
-                  data-bs-target="#withdrawModal"
+                  // data-bs-toggle="modal"
+                  // data-bs-target="#withdrawModal"
                   className="btn btn-sm btn--base"
+                  onClick={() => setShow(true)}
                 >
                   <i className="las la-minus-circle" /> Withdraw Now
                 </button>
@@ -93,6 +100,12 @@ const Withdraw = () => {
           </div>
         </section>
       </div>
+      <Example
+        handleClose={handleClose}
+        handleShow={handleShow}
+        setShow={setShow}
+        show={show}
+      />
       <div id="detailModal" className="modal fade" tabIndex={-1} role="dialog">
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">

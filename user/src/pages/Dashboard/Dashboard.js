@@ -189,7 +189,7 @@ const Dashboard = () => {
                   <input
                     type="url"
                     id="ref"
-                    defaultValue={`https://smartsavecontribution.com?reference=${user.user.username}`}
+                    defaultValue={`https://yoursmartsave.com?reference=${user.user.username}`}
                     className="form-control form-control-lg bg-transparent text-white"
                     readOnly
                   />

@@ -107,7 +107,7 @@ const Footer = () => {
                 className="footer-logo"
               >
                 <img
-                  src="https://smartsavecontribution.com/assets/images/logoIcon/logo.png"
+                  src={require("../assets/images/logoIcon/logo.png")}
                   alt="logo"
                 />
               </a>
