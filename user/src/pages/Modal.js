@@ -1,14 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert";
+import { link } from "../constants/Link";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Example({ show, setShow, handleClose, handleShow }) {
   const [errorm, seterror] = useState("");
-  const [email, setemail] = useState("");
+  const [amount, setamout] = useState("");
   const [method, setmethod] = useState("");
+  const [user, setUser] = useState([]);
+  const [loading, setloading] = useState(false);
+  const id = JSON.parse(localStorage.getItem("user")).user;
+  const navigate = useNavigate();
+  useEffect(async () => {
+    if (id._id) {
+      try {
+        setloading(true);
+        const user = await axios.get(`${link}/getuser/${id._id}`);
 
+        if (user.data) {
+          setUser(user.data);
+          console.log(user.data);
+          setloading(false);
+        }
+      } catch (error) {
+        setloading(false);
+        console.log(error);
+      }
+    }
+  }, []);
   return (
     <>
       <Modal show={show} onHide={handleClose}>
@@ -28,12 +51,12 @@ function Example({ show, setShow, handleClose, handleShow }) {
               </Form.Select>
             </Form.Group>
 
-            <Form.Group controlId="formGridEmail">
-              <Form.Label>Email</Form.Label>
+            <Form.Group controlId="formGridamount">
+              <Form.Label>Amount</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="Enter email"
-                onChange={(e) => setemail(e.target.value)}
+                type="text"
+                placeholder="Enter Amount to withdraw"
+                onChange={(e) => setamout(e.target.value)}
               />
             </Form.Group>
           </Form>
@@ -42,19 +65,28 @@ function Example({ show, setShow, handleClose, handleShow }) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button
-            variant="primary"
-            onClick={() => {
-              if (email == "" && method == "") {
-                seterror("All fields are required");
-                return;
-              }
+          {loading ? (
+            <Button variant="primary" disabled={true}>
+              Loading...
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              onClick={() => {
+                if (amount == "" && method == "") {
+                  seterror("All fields are required");
+                  return;
+                }
 
-              seterror("Issufficient Funds");
-            }}
-          >
-            Withdraw
-          </Button>
+                if (user.user.accountBalance <= amount) {
+                  return seterror("Insufficient Funds");
+                }
+                navigate("/withdrawal");
+              }}
+            >
+              Withdraw
+            </Button>
+          )}
         </Modal.Footer>
         {errorm && (
           <Alert key="danger" variant="danger">

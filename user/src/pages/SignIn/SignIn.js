@@ -35,10 +35,12 @@ const Signin = () => {
         navigate("/user/dashboard");
       }
     } catch (error) {
-      if (error.response.status == 401) {
-        navigate("/authorization");
-        localStorage.setItem("user", JSON.stringify(error.response.data));
-        return;
+      if (error.response) {
+        if (error.response.status == 401) {
+          navigate("/authorization");
+          localStorage.setItem("user", JSON.stringify(error.response.data));
+          return;
+        }
       }
       console.log(error);
       setError(

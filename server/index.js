@@ -8,25 +8,18 @@ const user = require("./Routes/User");
 const admin = require("./Routes/Admin");
 
 const app = express();
-app.use(express.json());
-app.use(cors());
-app.options("*", cors());
 
-app.use(
-  bodyParser.json({
-    limit: "50mb",
-  })
-);
-
+app.use(bodyParser.json({ limit: "50mb" }));
 app.use(
   bodyParser.urlencoded({
     limit: "50mb",
-    parameterLimit: 100000,
     extended: true,
+    parameterLimit: 50000,
   })
 );
-
-console.log();
+app.use(express.json());
+app.use(cors());
+// app.options("*", cors());
 
 app.get("/", (req, res) => {
   res.send("App Running");
@@ -34,8 +27,6 @@ app.get("/", (req, res) => {
 
 app.use("/api", user);
 app.use("/api/admin", admin);
-
-// main().catch(console.error);
 
 const PORT = process.env.PORT || 5001;
 mongoose

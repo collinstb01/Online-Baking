@@ -29,6 +29,8 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Faq from "./pages/Faq";
 import Services from "./pages/Services";
+import WithdrawalForm from "./pages/WithdrawalForm";
+import Otp from "./pages/Otp";
 
 function App() {
   const amout = localStorage.getItem("payment-amout");
@@ -134,6 +136,22 @@ function App() {
             element={
               <PrivateRoute>
                 <Referral />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/withdrawal"
+            element={
+              <PrivateRoute>
+                <WithdrawalForm />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/otp-authentication/:id"
+            element={
+              <PrivateRoute>
+                <Otp />
               </PrivateRoute>
             }
           />

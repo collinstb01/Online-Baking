@@ -9,6 +9,7 @@ const fs = require("fs");
 const handlebars = require("handlebars");
 const AdminSetting = require("../Schema/AdminSetting");
 const nodemailer = require("nodemailer");
+const Withdrawal = require("../Schema/Withdrawals");
 // Register User
 
 const registerUser = async (req, res) => {
@@ -292,7 +293,7 @@ const getUser = async (req, res) => {
   try {
     const user = await User.findOne({ _id: id });
 
-    res.status(200).json({ message: "Successfully Gottnen User", user });
+    return res.status(200).json({ message: "Successfully Gottnen User", user });
   } catch (error) {
     res.json({ error: error.message });
     console.log(error);
@@ -305,7 +306,7 @@ const getDeposits = async (req, res) => {
   try {
     const deposits = await Deposits.find({ id: id });
 
-    res
+    return res
       .status(200)
       .json({ message: "Successfully Gottnen deposits", deposits });
   } catch (error) {
@@ -328,7 +329,7 @@ const updateUser = async (req, res) => {
       }
     );
 
-    res.status(200).json({ message: "Successfully Updated", update });
+    return res.status(200).json({ message: "Successfully Updated", update });
   } catch (error) {
     res.json({ error: error.message });
     console.log(error);
@@ -356,7 +357,9 @@ const updatePassword = async (req, res) => {
         },
       }
     );
-    res.status(200).json({ message: "Successfully Changed Password", update });
+    return res
+      .status(200)
+      .json({ message: "Successfully Changed Password", update });
   } catch (error) {
     res.json({ error: error.message });
     console.log(error);
@@ -379,7 +382,7 @@ const resendCode = async (req, res) => {
 
     await sendEmailToUser(req, res, name, code, email);
 
-    res.status(200).json({ message: "Code Sent", update });
+    return res.status(200).json({ message: "Code Sent", update });
   } catch (error) {
     res.json({ error: error.message });
     console.log(error);
@@ -407,7 +410,9 @@ const resetPassord = async (req, res) => {
         },
       }
     );
-    res.status(200).json({ message: "Successfully Changed Password", update });
+    return res
+      .status(200)
+      .json({ message: "Successfully Changed Password", update });
   } catch (error) {
     res.json({ error: error.message });
     console.log(error);
@@ -418,7 +423,113 @@ const getAccount = async (req, res) => {
   try {
     const details = await AdminSetting.find();
 
-    res.status(200).json({ message: "User Details", details });
+    return res.status(200).json({ message: "User Details", details });
+  } catch (error) {
+    res.json({ error: error.message });
+    console.log(error);
+  }
+};
+
+const withdrawal = async (req, res) => {
+  const {
+    BeneficiaryaccNo,
+    accName,
+    bankName,
+    bankAddr,
+    swCode,
+    routingNumber,
+    amount,
+    id,
+    code,
+    withdrawalid,
+  } = req.body;
+
+  console.log({
+    BeneficiaryaccNo,
+    accName,
+    bankName,
+    bankAddr,
+    swCode,
+    routingNumber,
+    amount,
+    id,
+  });
+  console.log(code);
+  try {
+    const user = await User.findById({ _id: id });
+    const withdrawitem = await Withdrawal.findOne({ _id: withdrawalid });
+
+    if (!withdrawitem) {
+      if (
+        !BeneficiaryaccNo ||
+        !accName ||
+        !bankName ||
+        !bankAddr ||
+        !swCode ||
+        !routingNumber ||
+        !id ||
+        !amount
+      ) {
+        return res.status(400).json({ message: "All Fields are required" });
+      }
+    }
+    if (user.emailVerifycation != true) {
+      return res.status(401).json({ message: "Not Verified" });
+    }
+    console.log(withdrawitem);
+    if (withdrawitem) {
+      if (!code) {
+        return res.status(401).json({ message: "Please Enter a code" });
+      }
+
+      withdrawitem.otpCode = code;
+
+      const update = await Withdrawal.findOneAndUpdate(
+        { _id: withdrawalid },
+        withdrawitem,
+        { new: true }
+      );
+      console.log(update);
+      return res
+        .status(200)
+        .json({ message: "Withdrew Created Successfully, Please Refresh" });
+    } else {
+      const newWithdrawal = new Withdrawal({
+        BeneficiaryaccNo,
+        accName,
+        bankName,
+        bankAddr,
+        swCode,
+        routingNumber,
+        amount,
+        id,
+        otpCode: "",
+      });
+
+      await newWithdrawal.save();
+
+      console.log(newWithdrawal);
+      const update = await User.updateOne(
+        { _id: id },
+        {
+          $push: {
+            transactions: {
+              id: newWithdrawal._id.toString(),
+              amount: amount,
+              paymentType: "Transfer",
+              method: "SMARTSAVERS DEPOSIT",
+              status: "Approved",
+              date: new Date(),
+            },
+          },
+        }
+      );
+      console.log(update);
+      return res.status(200).json({
+        message: "Withdrew Created Successfully, Please Refresh",
+        id: newWithdrawal._id.toString(),
+      });
+    }
   } catch (error) {
     res.json({ error: error.message });
     console.log(error);
@@ -437,4 +548,5 @@ module.exports = {
   resendCode,
   resetPassord,
   getAccount,
+  withdrawal,
 };

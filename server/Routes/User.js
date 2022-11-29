@@ -11,6 +11,7 @@ const {
   resendCode,
   resetPassord,
   getAccount,
+  withdrawal,
 } = require("../controllers/User");
 
 const router = express.Router();
@@ -19,6 +20,7 @@ router.post("/signup", registerUser);
 router.post("/login", loginUser);
 router.post("/verify-code", verifyCode);
 router.post("/deposit", deposit);
+router.post("/withdraw", withdrawal);
 router.get("/getuser/:id", getUser);
 router.get("/getdeposit/:id", getDeposits);
 router.patch("/update-user", updateUser);

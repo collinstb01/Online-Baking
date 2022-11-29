@@ -25,7 +25,7 @@ const loginAdmin = async (req, res) => {
 const getDeposits = async (req, res) => {
   const deposits = await Deposits.find();
 
-  res.status(200).json({ message: "Loggedin", deposits });
+  return res.status(200).json({ message: "Loggedin", deposits });
 
   try {
   } catch (error) {
@@ -37,7 +37,7 @@ const getDeposits = async (req, res) => {
 const getWithdrawal = async (req, res) => {
   const withdrawals = await withdrawal.find();
 
-  res.status(200).json({ message: "Gotten Successfully", withdrawals });
+  return res.status(200).json({ message: "Gotten Successfully", withdrawals });
 
   try {
   } catch (error) {
@@ -125,7 +125,7 @@ const updateDepositStatus = async (req, res) => {
 
     console.log(user.accountBalance, amount);
 
-    res.status(200).json({ message: "Successfully Updated" });
+    return res.status(200).json({ message: "Successfully Updated" });
   } catch (error) {
     res.json({ message: error.message });
     console.log(error);

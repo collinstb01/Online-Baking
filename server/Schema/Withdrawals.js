@@ -1,31 +1,34 @@
 const mongoose = require("mongoose");
 
-const withdrawalSchema = mongoose.Schema({
-  userId: {
+const WithdrawalSchema = mongoose.Schema({
+  BeneficiaryaccNo: {
     type: String,
-    required: true,
+  },
+  accName: {
+    type: String,
+  },
+  bankName: {
+    type: String,
+  },
+  bankAddr: {
+    type: String,
+  },
+  swCode: {
+    type: String,
+  },
+  routingNumber: {
+    type: String,
   },
   amount: {
     type: String,
-    required: true,
   },
-  paymentImage: {
-    type: String,
-    required: true,
-  },
-  method: {
-    type: String,
-    required: true,
-  },
-  charge: {
-    default: 0,
+  otpCode: {
     type: String,
   },
-  status: {
+  id: {
     type: String,
-    default: "Pending",
   },
 });
 
-const withdrawal = mongoose.model("withdrawal", withdrawalSchema);
-module.exports = withdrawal;
+const Withdrawal = mongoose.model("Withdrawal", WithdrawalSchema);
+module.exports = Withdrawal;

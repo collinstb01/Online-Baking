@@ -43,6 +43,40 @@ main {
   justify-content: center;
   align-items: center;
 }
+.inputsboxes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.inpputbox {
+  padding: 15px 20px;
+}
+.withdrawbtn {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+.withdrawbtnn {
+  padding: 10px 20px;
+}
+.succdjdddj {
+  flex-direction: column;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.containeee {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+@media (max-width: 900px) {
+  .inputsboxes {
+    grid-template-columns: 1fr;
+  }
+}
+
 select {
   appearance: none;
   -webkit-appearance: none;
