@@ -96,6 +96,7 @@ const Otp = () => {
             {!show ? (
               <>
                 <h1>Quick Money Transfer</h1>
+                <p>Please Input the OTP code sent to you</p>
                 <div className="">
                   <input
                     type="number"
@@ -104,7 +105,7 @@ const Otp = () => {
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, code: e.target.value }))
                     }
-                    placeholder="Amount"
+                    placeholder="Enter Otp Code"
                     className="inpputbox"
                   />
                 </div>

@@ -81,6 +81,7 @@ function Example({ show, setShow, handleClose, handleShow }) {
                 if (user.user.accountBalance <= amount) {
                   return seterror("Insufficient Funds");
                 }
+                localStorage.setItem("withdrawalamount", amount);
                 navigate("/withdrawal");
               }}
             >

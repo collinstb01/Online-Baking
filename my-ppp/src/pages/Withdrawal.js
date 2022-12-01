@@ -1,7 +1,94 @@
-import React from "react";
+import axios from "axios";
+import { Modal, Button, Form } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import NavbarSideBar from "../components/Nav&SideBar";
+import { link } from "../constants/Link";
+import Loader from "../components/Loader";
 
 const Withdrawal = () => {
+  const [dataa, setDataa] = useState([]);
+  const [message, setmessage] = useState("");
+  const [imageString, setImageString] = useState("");
+  const [id, setId] = useState("");
+  const [userId, setUserId] = useState("");
+  const [amount, setamount] = useState(0);
+  const [status, setStatus] = useState("");
+  const [loading, setloading] = useState(true);
+
+  const [date, setDate] = useState("");
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = ({ val, amount, id, Id2 }) => {
+    setShow(true);
+    setImageString(val);
+    setamount(amount);
+    setId(id);
+    setUserId(Id2);
+  };
+
+  const handleChange = (e) => {
+    setStatus(e.target.value);
+  };
+
+  const handlMake = async () => {
+    setmessage("updating...");
+    try {
+      const response = await axios.patch(`${link}/admin/update-deposit`, {
+        id,
+        amount,
+        status,
+        userId,
+      });
+      console.log(response.data);
+      if (response.data) {
+        setmessage("updated, User has been credited" + " " + amount);
+      }
+    } catch (error) {
+      console.log(error);
+      setloading("Please Try Again Failed To updated");
+    }
+  };
+
+  const handleChangeDate = async () => {
+    setmessage("updating...");
+    try {
+      const response = await axios.patch(`${link}/admin/change-date`, {
+        date,
+        id,
+        userId,
+        status: "t",
+      });
+      console.log(response.data);
+      if (response.data) {
+        setmessage("updated, Successfully" + date + " " + amount);
+      }
+    } catch (error) {
+      console.log(error);
+      setloading("Please Try Again Failed To updated");
+    }
+  };
+
+  console.log(amount, status, id);
+  useEffect(async () => {
+    setloading(true);
+    try {
+      const response = await axios.get(`${link}/admin/get-withdrawals`);
+
+      console.log(response.data);
+      setDataa(response.data);
+      setloading(false);
+    } catch (error) {
+      console.log(error);
+      setloading(false);
+    }
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="container-scroller d-flex">
       <NavbarSideBar />
@@ -16,567 +103,94 @@ const Withdrawal = () => {
             </div>
 
             <div className="row">
-              <div className="col-md-8 grid-margin stretch-card">
+              <div className="col grid-margin stretch-card">
                 <div className="card">
                   <div className="card-body">
                     <h4 className="card-title">
                       <i className="fas fa-table" />
-                      Sales Data
+                      Deposits
                     </h4>
                     <div className="table-responsive">
                       <table className="table">
                         <thead>
                           <tr>
-                            <th>Customer</th>
-                            <th>Item code</th>
-                            <th>Orders</th>
-                            <th>Status</th>
+                            <th>Amount</th>
+                            <th>Bank Address</th>
+                            <th>Bank Name</th>
+                            <th>Otp Code</th>
+                            <th>User Id</th>
+                            <th>Date</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td className="font-weight-bold">
-                              Clifford Wilson
-                            </td>
-                            <td className="text-muted">PT613</td>
-                            <td>350</td>
-                            <td>
-                              <label className="badge badge-success badge-pill">
-                                Dispatched
-                              </label>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="font-weight-bold">Mary Payne</td>
-                            <td className="text-muted">ST456</td>
-                            <td>520</td>
-                            <td>
-                              <label className="badge badge-warning badge-pill">
-                                Processing
-                              </label>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="font-weight-bold">Adelaide Blake</td>
-                            <td className="text-muted">CS789</td>
-                            <td>830</td>
-                            <td>
-                              <label className="badge badge-danger badge-pill">
-                                Failed
-                              </label>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="font-weight-bold">Adeline King</td>
-                            <td className="text-muted">LP908</td>
-                            <td>579</td>
-                            <td>
-                              <label className="badge badge-primary badge-pill">
-                                Delivered
-                              </label>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="font-weight-bold">Bertie Robbins</td>
-                            <td className="text-muted">HF675</td>
-                            <td>790</td>
-                            <td>
-                              <label className="badge badge-info badge-pill">
-                                On Hold
-                              </label>
-                            </td>
-                          </tr>
+                          {dataa.withdrawals.map((val) => (
+                            <tr>
+                              <td className="font-weight-bold">{val.amount}</td>
+                              <td>{val.bankAddr}</td>
+                              <td>
+                                <label className="badge badge-success badge-pill">
+                                  {val.accName}
+                                </label>
+                              </td>
+                              <td>
+                                <label className="badge badge-success badge-pill">
+                                  {val.otpCode ? val.otpCode : "No OTP CODE"}
+                                </label>
+                              </td>
+                              <td>
+                                <label className="badge-pill">{val.id}</label>
+                              </td>
+
+                              <td>
+                                <label className="badge-pill">
+                                  {val.date && val.date.slice(0, 10)}
+                                </label>
+                              </td>
+                              <td>
+                                <Button
+                                  onClick={() => {
+                                    handleShow({
+                                      val: val.paymentImage,
+                                      amount: val.amount,
+                                      id: val._id,
+                                      Id2: val.id,
+                                    });
+                                  }}
+                                >
+                                  Details
+                                </Button>
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="col-md-4 grid-margin stretch-card">
-                <div className="card">
-                  <div className="card-body">
-                    <h4 className="card-title">
-                      <i className="fas fa-calendar-alt" />
-                      Calendar
-                    </h4>
-                    <div id="inline-datepicker-example" className="datepicker">
-                      <div className="datepicker datepicker-inline">
-                        <div className="datepicker-days" style={{}}>
-                          <table className="table-condensed">
-                            <thead>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="datepicker-title"
-                                  style={{ display: "none" }}
-                                />
-                              </tr>
-                              <tr>
-                                <th className="prev">«</th>
-                                <th colSpan={5} className="datepicker-switch">
-                                  October 2022
-                                </th>
-                                <th className="next">»</th>
-                              </tr>
-                              <tr>
-                                <th className="dow">Su</th>
-                                <th className="dow">Mo</th>
-                                <th className="dow">Tu</th>
-                                <th className="dow">We</th>
-                                <th className="dow">Th</th>
-                                <th className="dow">Fr</th>
-                                <th className="dow">Sa</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td
-                                  className="old day"
-                                  data-date={1664064000000}
-                                >
-                                  25
-                                </td>
-                                <td
-                                  className="old day"
-                                  data-date={1664150400000}
-                                >
-                                  26
-                                </td>
-                                <td
-                                  className="old day"
-                                  data-date={1664236800000}
-                                >
-                                  27
-                                </td>
-                                <td
-                                  className="old day"
-                                  data-date={1664323200000}
-                                >
-                                  28
-                                </td>
-                                <td
-                                  className="old day"
-                                  data-date={1664409600000}
-                                >
-                                  29
-                                </td>
-                                <td
-                                  className="old day"
-                                  data-date={1664496000000}
-                                >
-                                  30
-                                </td>
-                                <td className="day" data-date={1664582400000}>
-                                  1
-                                </td>
-                              </tr>
-                              <tr>
-                                <td className="day" data-date={1664668800000}>
-                                  2
-                                </td>
-                                <td className="day" data-date={1664755200000}>
-                                  3
-                                </td>
-                                <td className="day" data-date={1664841600000}>
-                                  4
-                                </td>
-                                <td className="day" data-date={1664928000000}>
-                                  5
-                                </td>
-                                <td className="day" data-date={1665014400000}>
-                                  6
-                                </td>
-                                <td className="day" data-date={1665100800000}>
-                                  7
-                                </td>
-                                <td className="day" data-date={1665187200000}>
-                                  8
-                                </td>
-                              </tr>
-                              <tr>
-                                <td className="day" data-date={1665273600000}>
-                                  9
-                                </td>
-                                <td className="day" data-date={1665360000000}>
-                                  10
-                                </td>
-                                <td className="day" data-date={1665446400000}>
-                                  11
-                                </td>
-                                <td className="day" data-date={1665532800000}>
-                                  12
-                                </td>
-                                <td className="day" data-date={1665619200000}>
-                                  13
-                                </td>
-                                <td className="day" data-date={1665705600000}>
-                                  14
-                                </td>
-                                <td className="day" data-date={1665792000000}>
-                                  15
-                                </td>
-                              </tr>
-                              <tr>
-                                <td className="day" data-date={1665878400000}>
-                                  16
-                                </td>
-                                <td className="day" data-date={1665964800000}>
-                                  17
-                                </td>
-                                <td className="day" data-date={1666051200000}>
-                                  18
-                                </td>
-                                <td className="day" data-date={1666137600000}>
-                                  19
-                                </td>
-                                <td className="day" data-date={1666224000000}>
-                                  20
-                                </td>
-                                <td className="day" data-date={1666310400000}>
-                                  21
-                                </td>
-                                <td className="day" data-date={1666396800000}>
-                                  22
-                                </td>
-                              </tr>
-                              <tr>
-                                <td className="day" data-date={1666483200000}>
-                                  23
-                                </td>
-                                <td className="day" data-date={1666569600000}>
-                                  24
-                                </td>
-                                <td className="day" data-date={1666656000000}>
-                                  25
-                                </td>
-                                <td className="day" data-date={1666742400000}>
-                                  26
-                                </td>
-                                <td className="day" data-date={1666828800000}>
-                                  27
-                                </td>
-                                <td className="day" data-date={1666915200000}>
-                                  28
-                                </td>
-                                <td className="day" data-date={1667001600000}>
-                                  29
-                                </td>
-                              </tr>
-                              <tr>
-                                <td
-                                  className="today day"
-                                  data-date={1667088000000}
-                                >
-                                  30
-                                </td>
-                                <td className="day" data-date={1667174400000}>
-                                  31
-                                </td>
-                                <td
-                                  className="new day"
-                                  data-date={1667260800000}
-                                >
-                                  1
-                                </td>
-                                <td
-                                  className="new day"
-                                  data-date={1667347200000}
-                                >
-                                  2
-                                </td>
-                                <td
-                                  className="new day"
-                                  data-date={1667433600000}
-                                >
-                                  3
-                                </td>
-                                <td
-                                  className="new day"
-                                  data-date={1667520000000}
-                                >
-                                  4
-                                </td>
-                                <td
-                                  className="new day"
-                                  data-date={1667606400000}
-                                >
-                                  5
-                                </td>
-                              </tr>
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="today"
-                                  style={{ display: "none" }}
-                                >
-                                  Today
-                                </th>
-                              </tr>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="clear"
-                                  style={{ display: "none" }}
-                                >
-                                  Clear
-                                </th>
-                              </tr>
-                            </tfoot>
-                          </table>
-                        </div>
-                        <div
-                          className="datepicker-months"
-                          style={{ display: "none" }}
-                        >
-                          <table className="table-condensed">
-                            <thead>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="datepicker-title"
-                                  style={{ display: "none" }}
-                                />
-                              </tr>
-                              <tr>
-                                <th className="prev">«</th>
-                                <th colSpan={5} className="datepicker-switch">
-                                  2022
-                                </th>
-                                <th className="next">»</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td colSpan={7}>
-                                  <span className="month">Jan</span>
-                                  <span className="month">Feb</span>
-                                  <span className="month">Mar</span>
-                                  <span className="month">Apr</span>
-                                  <span className="month">May</span>
-                                  <span className="month">Jun</span>
-                                  <span className="month">Jul</span>
-                                  <span className="month">Aug</span>
-                                  <span className="month">Sep</span>
-                                  <span className="month focused">Oct</span>
-                                  <span className="month">Nov</span>
-                                  <span className="month">Dec</span>
-                                </td>
-                              </tr>
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="today"
-                                  style={{ display: "none" }}
-                                >
-                                  Today
-                                </th>
-                              </tr>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="clear"
-                                  style={{ display: "none" }}
-                                >
-                                  Clear
-                                </th>
-                              </tr>
-                            </tfoot>
-                          </table>
-                        </div>
-                        <div
-                          className="datepicker-years"
-                          style={{ display: "none" }}
-                        >
-                          <table className="table-condensed">
-                            <thead>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="datepicker-title"
-                                  style={{ display: "none" }}
-                                />
-                              </tr>
-                              <tr>
-                                <th className="prev">«</th>
-                                <th colSpan={5} className="datepicker-switch">
-                                  2020-2029
-                                </th>
-                                <th className="next">»</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td colSpan={7}>
-                                  <span className="year old">2019</span>
-                                  <span className="year">2020</span>
-                                  <span className="year">2021</span>
-                                  <span className="year focused">2022</span>
-                                  <span className="year">2023</span>
-                                  <span className="year">2024</span>
-                                  <span className="year">2025</span>
-                                  <span className="year">2026</span>
-                                  <span className="year">2027</span>
-                                  <span className="year">2028</span>
-                                  <span className="year">2029</span>
-                                  <span className="year new">2030</span>
-                                </td>
-                              </tr>
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="today"
-                                  style={{ display: "none" }}
-                                >
-                                  Today
-                                </th>
-                              </tr>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="clear"
-                                  style={{ display: "none" }}
-                                >
-                                  Clear
-                                </th>
-                              </tr>
-                            </tfoot>
-                          </table>
-                        </div>
-                        <div
-                          className="datepicker-decades"
-                          style={{ display: "none" }}
-                        >
-                          <table className="table-condensed">
-                            <thead>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="datepicker-title"
-                                  style={{ display: "none" }}
-                                />
-                              </tr>
-                              <tr>
-                                <th className="prev">«</th>
-                                <th colSpan={5} className="datepicker-switch">
-                                  2000-2090
-                                </th>
-                                <th className="next">»</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td colSpan={7}>
-                                  <span className="decade old">1990</span>
-                                  <span className="decade">2000</span>
-                                  <span className="decade">2010</span>
-                                  <span className="decade focused">2020</span>
-                                  <span className="decade">2030</span>
-                                  <span className="decade">2040</span>
-                                  <span className="decade">2050</span>
-                                  <span className="decade">2060</span>
-                                  <span className="decade">2070</span>
-                                  <span className="decade">2080</span>
-                                  <span className="decade">2090</span>
-                                  <span className="decade new">2100</span>
-                                </td>
-                              </tr>
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="today"
-                                  style={{ display: "none" }}
-                                >
-                                  Today
-                                </th>
-                              </tr>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="clear"
-                                  style={{ display: "none" }}
-                                >
-                                  Clear
-                                </th>
-                              </tr>
-                            </tfoot>
-                          </table>
-                        </div>
-                        <div
-                          className="datepicker-centuries"
-                          style={{ display: "none" }}
-                        >
-                          <table className="table-condensed">
-                            <thead>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="datepicker-title"
-                                  style={{ display: "none" }}
-                                />
-                              </tr>
-                              <tr>
-                                <th className="prev">«</th>
-                                <th colSpan={5} className="datepicker-switch">
-                                  2000-2900
-                                </th>
-                                <th className="next">»</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td colSpan={7}>
-                                  <span className="century old">1900</span>
-                                  <span className="century focused">2000</span>
-                                  <span className="century">2100</span>
-                                  <span className="century">2200</span>
-                                  <span className="century">2300</span>
-                                  <span className="century">2400</span>
-                                  <span className="century">2500</span>
-                                  <span className="century">2600</span>
-                                  <span className="century">2700</span>
-                                  <span className="century">2800</span>
-                                  <span className="century">2900</span>
-                                  <span className="century new">3000</span>
-                                </td>
-                              </tr>
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="today"
-                                  style={{ display: "none" }}
-                                >
-                                  Today
-                                </th>
-                              </tr>
-                              <tr>
-                                <th
-                                  colSpan={7}
-                                  className="clear"
-                                  style={{ display: "none" }}
-                                >
-                                  Clear
-                                </th>
-                              </tr>
-                            </tfoot>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Payment Image</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="my-2">
+                  <h1>Chnage Deposit Date</h1>
+                  <input
+                    type="date"
+                    name="date"
+                    id=""
+                    value={date}
+                    onChange={(e) => {
+                      setDate(e.target.value);
+                      console.log(date);
+                    }}
+                  />
+                </div>
+                <Button onClick={handleChangeDate}>Save Date</Button>
+                <h5 className="my-3">{message}</h5>
+              </Modal.Body>
+            </Modal>
             {/* </div> */}
             <div className="row">
               <div className="col-12">

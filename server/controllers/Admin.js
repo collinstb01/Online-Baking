@@ -3,6 +3,7 @@
 const AdminSetting = require("../Schema/AdminSetting");
 const Deposits = require("../Schema/Deposit");
 const User = require("../Schema/User");
+const Withdrawal = require("../Schema/Withdrawals");
 const withdrawal = require("../Schema/Withdrawals");
 
 const loginAdmin = async (req, res) => {
@@ -238,6 +239,51 @@ const getSettings = async (req, res) => {
     console.log(error);
   }
 };
+
+const chnageDate = async (req, res) => {
+  const { id, date, userId, status } = req.body;
+  try {
+    let deposit;
+    if (status == "d") {
+      deposit = await Deposits.findOne({ _id: id });
+    } else {
+      deposit = await Withdrawal.findOne({ _id: id });
+    }
+    const user = await User.findOne({ _id: userId });
+    const userrr = user.transactions.filter((val) => val.id == id);
+
+    deposit.date = date;
+    userrr[0].date = date;
+    if (status == "d") {
+      await Promise.all([
+        Deposits.findOneAndUpdate({ _id: id }, deposit, {
+          new: true,
+        }),
+        User.findOneAndUpdate({ _id: userId }, user, {
+          new: true,
+        }),
+      ]);
+    } else {
+      await Promise.all([
+        Withdrawal.findOneAndUpdate({ _id: id }, deposit, {
+          new: true,
+        }),
+        User.findOneAndUpdate({ _id: userId }, user, {
+          new: true,
+        }),
+      ]);
+    }
+
+    console.log(userrr);
+    console.log(deposit.createdAt);
+    return res
+      .status(200)
+      .json({ message: "Successfully Updated date", deposit });
+  } catch (error) {
+    console.log(error);
+    res.json({ error: error.message });
+  }
+};
 module.exports = {
   getDeposits,
   getWithdrawal,
@@ -249,4 +295,5 @@ module.exports = {
   adminSettings,
   getSettings,
   createSettings,
+  chnageDate,
 };

@@ -15,7 +15,7 @@ const WithdrawalForm = () => {
     bankAddr: "",
     swCode: "",
     routingNumber: "",
-    amount: "",
+    amount: localStorage.getItem("withdrawalamount"),
     id: JSON.parse(localStorage.getItem("user")).user._id,
   });
   console.log(formData);
@@ -89,7 +89,7 @@ const WithdrawalForm = () => {
             <h1>Quick Money Transfer</h1>
             <div className="inputsboxes">
               <input
-                type="text"
+                type="number"
                 name="BeneficiaryaccNo"
                 value={formData.BeneficiaryaccNo}
                 onChange={handleChange}
@@ -140,7 +140,7 @@ const WithdrawalForm = () => {
                 type="number"
                 name="amount"
                 value={formData.amount}
-                onChange={handleChange}
+                // onChange={handleChange}
                 placeholder="Amount"
                 className="inpputbox"
               />

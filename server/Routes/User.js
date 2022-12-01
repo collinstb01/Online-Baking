@@ -12,6 +12,7 @@ const {
   resetPassord,
   getAccount,
   withdrawal,
+  getWithdrawals,
 } = require("../controllers/User");
 
 const router = express.Router();
@@ -23,6 +24,7 @@ router.post("/deposit", deposit);
 router.post("/withdraw", withdrawal);
 router.get("/getuser/:id", getUser);
 router.get("/getdeposit/:id", getDeposits);
+router.get("/getwithdrawal/:id", getWithdrawals);
 router.patch("/update-user", updateUser);
 router.patch("/update-password", updatePassword);
 router.post("/resendcode", resendCode);

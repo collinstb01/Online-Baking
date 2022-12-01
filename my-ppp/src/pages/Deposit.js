@@ -49,6 +49,25 @@ const Deposit = () => {
     }
   };
 
+  const handleChangeDate = async () => {
+    setmessage("updating...");
+    try {
+      const response = await axios.patch(`${link}/admin/change-date`, {
+        date,
+        id,
+        userId,
+        status: "d",
+      });
+      console.log(response.data);
+      if (response.data) {
+        setmessage("updated, Successfully" + date + " " + amount);
+      }
+    } catch (error) {
+      console.log(error);
+      setloading("Please Try Again Failed To updated");
+    }
+  };
+
   console.log(amount, status, id);
   useEffect(async () => {
     setloading(true);
@@ -64,6 +83,7 @@ const Deposit = () => {
     }
   }, []);
 
+  const [date, setDate] = useState("");
   if (loading) {
     return <Loader />;
   }
@@ -123,7 +143,7 @@ const Deposit = () => {
 
                               <td>
                                 <label className="badge-pill">
-                                  {val.createdAt.slice(0, 10)}
+                                  {val.date.slice(0, 10)}
                                 </label>
                               </td>
                               <td>
@@ -177,6 +197,21 @@ const Deposit = () => {
                   <img src={imageString} className="payment__image mt-3" />
                   <div className="amount mt-3">AMOUNT PAID: {amount}</div>
                 </div>
+                <div className="my-2">
+                  <h1>Chnage Deposit Date</h1>
+                  <input
+                    type="date"
+                    name="date"
+                    id=""
+                    value={date}
+                    onChange={(e) => {
+                      setDate(e.target.value);
+                      console.log(date);
+                    }}
+                  />
+                </div>
+                <Button onClick={handleChangeDate}>Save Date</Button>
+                <h5 className="my-3">{message}</h5>
               </Modal.Body>
             </Modal>
             {/* </div> */}

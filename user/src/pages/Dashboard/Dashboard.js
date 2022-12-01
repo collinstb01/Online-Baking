@@ -11,6 +11,8 @@ const Dashboard = () => {
   const id = JSON.parse(localStorage.getItem("user")).user;
   const [user, setUser] = useState([]);
   const [loading, setloading] = useState(true);
+  const [dr, setDe] = useState([]);
+  const [tr, setTr] = useState([]);
 
   console.log(user);
   console.log(id);
@@ -23,6 +25,19 @@ const Dashboard = () => {
         if (user.data) {
           setUser(user.data);
           console.log(user.data);
+          const filteredArr = user.data.user.transactions.filter(
+            (val) => val.paymentType == "Deposit"
+          );
+          const filteredArr2 = user.data.user.transactions.filter(
+            (val) => val.paymentType == "Transfer"
+          );
+          const deposits = [...filteredArr.map((val) => val.amount)];
+          const Transfer = [...filteredArr2.map((val) => val.amount)];
+          console.log(deposits);
+          console.log(Transfer);
+
+          setDe(deposits);
+          setTr(Transfer);
           setloading(false);
         }
       } catch (error) {
@@ -120,7 +135,12 @@ const Dashboard = () => {
                     }}
                   >
                     <div className="d-widget__content">
-                      <h3 className="d-number text-white">{`$${user.user.accountBalance}`}</h3>
+                      <h3 className="d-number " style={{ color: "green" }}>
+                        {Array.isArray(dr)
+                          ? dr !== [] &&
+                            `${dr.reduce((x, y) => parseInt(x) + parseInt(y))}$`
+                          : "Loading..."}
+                      </h3>
                       <span className="caption text-white">Deposits</span>
                     </div>
                     <div className="d-widget__icon border-radius--100">
@@ -140,7 +160,13 @@ const Dashboard = () => {
                     }}
                   >
                     <div className="d-widget__content">
-                      <h3 className="d-number text-white">$0.00</h3>
+                      <h3 className="d-number " style={{ color: "red" }}>
+                        {" "}
+                        {Array.isArray(dr)
+                          ? tr !== [] &&
+                            `${tr.reduce((x, y) => parseInt(x) + parseInt(y))}$`
+                          : "Loading..."}
+                      </h3>
                       <span className="caption text-white">Withdrawals</span>
                     </div>
                     <div className="d-widget__icon border-radius--100">
@@ -205,7 +231,7 @@ const Dashboard = () => {
             </div>
             <div className="row gy-4 mt-5">
               <div className="col-lg-6">
-                <h4 className="mb-3">Latest Debits</h4>
+                <h4 className="mb-3">Latest Credits</h4>
                 <div className="custom--card">
                   <div className="card-body p-0">
                     <div className="table-responsive--md">
@@ -219,13 +245,22 @@ const Dashboard = () => {
                         </thead>
                         <tbody>
                           {Array.isArray(user.user.transactions) ? (
-                            user.user.transactions.map((val) => (
-                              <tr>
-                                <td>{val.date.toString().slice(0, 10)}</td>
-                                <td>{val.id}</td>
-                                <td>${val.amount}</td>
-                              </tr>
-                            ))
+                            user.user.transactions
+                              .filter((val) => val.paymentType == "Deposit")
+                              .map((val) => (
+                                <tr>
+                                  <td>{val.date.toString().slice(0, 10)}</td>
+                                  <td>{val.id}</td>
+                                  <td
+                                    style={{
+                                      color: "green",
+                                      fontWeight: "700",
+                                    }}
+                                  >
+                                    ${val.amount}
+                                  </td>
+                                </tr>
+                              ))
                           ) : (
                             <tr>
                               <td
@@ -243,7 +278,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="col-lg-6">
-                <h4 className="mb-3">Latest Credits</h4>
+                <h4 className="mb-3">Latest Debits</h4>
                 <div className="custom--card">
                   <div className="card-body p-0">
                     <div className="table-responsive--md">
@@ -256,14 +291,30 @@ const Dashboard = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td
-                              colSpan="100%"
-                              className="text-center justify-content-center"
-                            >
-                              No credits yet
-                            </td>
-                          </tr>
+                          {Array.isArray(user.user.transactions) ? (
+                            user.user.transactions
+                              .filter((val) => val.paymentType == "Transfer")
+                              .map((val) => (
+                                <tr>
+                                  <td>{val.date.toString().slice(0, 10)}</td>
+                                  <td>{val.id}</td>
+                                  <td
+                                    style={{ color: "red", fontWeight: "700" }}
+                                  >
+                                    ${val.amount}
+                                  </td>
+                                </tr>
+                              ))
+                          ) : (
+                            <tr>
+                              <td
+                                colSpan="100%"
+                                className="text-center justify-content-center"
+                              >
+                                No Debits yet
+                              </td>
+                            </tr>
+                          )}
                         </tbody>
                       </table>
                     </div>

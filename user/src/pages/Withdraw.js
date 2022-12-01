@@ -1,6 +1,10 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
+import { link } from "../constants/Link";
 import Example from "./Modal";
 
 const Withdraw = () => {
@@ -8,6 +12,33 @@ const Withdraw = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  // const [show, setshow] = useState(false);
+  const navigate = useNavigate();
+  const id = JSON.parse(localStorage.getItem("user")).user;
+  const [user, setUser] = useState([]);
+  const [loading, setloading] = useState(true);
+
+  console.log(user);
+  useEffect(async () => {
+    if (id._id) {
+      try {
+        setloading(true);
+        const user = await axios.get(`${link}/getwithdrawal/${id._id}`);
+
+        if (user.data) {
+          setUser(user.data);
+          console.log(user.data);
+          setloading(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <div>
       <div className="preloader" style={{ opacity: 0, display: "none" }}>
@@ -64,35 +95,49 @@ const Withdraw = () => {
                 </button>
               </div>
             </div>
-            <div className="row justify-content-center mb-none-30">
-              <div className="col-lg-12">
-                <div className="custom--card">
-                  <div className="card-body p-0">
-                    <div className="table-responsive--md">
-                      <table className="table custom--table">
-                        <thead>
+            <div className="custom--card">
+              <div className="card-body p-0">
+                <div className="table-responsive--md">
+                  <table className="table custom--table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Trx Id</th>
+                        <th>Account Name</th>
+                        <th>Account Number</th>
+                        <th>Amount</th>
+                        <th>Routing Number</th>
+                        {/* <th>Status</th> */}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Array.isArray(user.withdrawals) ? (
+                        user.withdrawals.map((val) => (
                           <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Method | TRX</th>
-                            <th scope="col">Amount | Charge</th>
-                            <th scope="col">Rate</th>
-                            <th scope="col">Final Amount</th>
-                            <th scope="col">Status</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td
-                              className="text-center justify-content-center"
-                              colSpan="100%"
-                            >
-                              No Withdrawals Yet
+                            <td>
+                              {val.createdAt &&
+                                val.createdAt.toString().slice(0, 10)}
                             </td>
+                            <td>{val.id}</td>
+                            <td>{val.accName}</td>
+                            <td>{val.BeneficiaryaccNo}</td>
+                            <td>{val.amount}$</td>
+                            <td>{val.routingNumber}</td>
+                            {/* <td>{`Pending`}</td> */}
                           </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+                        ))
+                      ) : (
+                        <tr>
+                          <td
+                            colSpan="100%"
+                            className="text-center justify-content-center"
+                          >
+                            No Transaction Yet
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>

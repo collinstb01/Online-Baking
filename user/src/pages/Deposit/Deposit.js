@@ -113,7 +113,7 @@ export const Deposit = () => {
                       {Array.isArray(user.deposits) ? (
                         user.deposits.map((val) => (
                           <tr>
-                            <td>{val.createdAt.toString().slice(0, 10)}</td>
+                            <td>{val.date.toString().slice(0, 10)}</td>
                             <td>{val.id}</td>
                             <td>{val.method}</td>
                             <td>{val.amount}</td>

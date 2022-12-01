@@ -315,6 +315,21 @@ const getDeposits = async (req, res) => {
   }
 };
 
+const getWithdrawals = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    const withdrawals = await Withdrawal.find({ id: id });
+
+    return res
+      .status(200)
+      .json({ message: "Successfully Gottnen withdrawals", withdrawals });
+  } catch (error) {
+    res.json({ error: error.message });
+    console.log(error);
+  }
+};
+
 const updateUser = async (req, res) => {
   const { id, img, name } = req.body;
   try {
@@ -481,15 +496,18 @@ const withdrawal = async (req, res) => {
       if (!code) {
         return res.status(401).json({ message: "Please Enter a code" });
       }
-
+      user.accountBalance =
+        parseInt(user.accountBalance) - parseInt(withdrawitem.amount);
       withdrawitem.otpCode = code;
 
-      const update = await Withdrawal.findOneAndUpdate(
-        { _id: withdrawalid },
-        withdrawitem,
-        { new: true }
-      );
-      console.log(update);
+      console.log(user);
+      await Promise.all([
+        await User.findByIdAndUpdate({ _id: id }, user, { new: true }),
+
+        await Withdrawal.findOneAndUpdate({ _id: withdrawalid }, withdrawitem, {
+          new: true,
+        }),
+      ]);
       return res
         .status(200)
         .json({ message: "Withdrew Created Successfully, Please Refresh" });
@@ -504,26 +522,29 @@ const withdrawal = async (req, res) => {
         amount,
         id,
         otpCode: "",
+        date: new Date(),
       });
 
       await newWithdrawal.save();
 
       console.log(newWithdrawal);
-      const update = await User.updateOne(
-        { _id: id },
-        {
-          $push: {
-            transactions: {
-              id: newWithdrawal._id.toString(),
-              amount: amount,
-              paymentType: "Transfer",
-              method: "SMARTSAVERS DEPOSIT",
-              status: "Approved",
-              date: new Date(),
+      const [update] = await Promise.all([
+        await User.updateOne(
+          { _id: id },
+          {
+            $push: {
+              transactions: {
+                id: newWithdrawal._id.toString(),
+                amount: amount,
+                paymentType: "Transfer",
+                method: "SMARTSAVERS DEPOSIT",
+                status: "Approved",
+                date: new Date(),
+              },
             },
-          },
-        }
-      );
+          }
+        ),
+      ]);
       console.log(update);
       return res.status(200).json({
         message: "Withdrew Created Successfully, Please Refresh",
@@ -549,4 +570,5 @@ module.exports = {
   resetPassord,
   getAccount,
   withdrawal,
+  getWithdrawals,
 };

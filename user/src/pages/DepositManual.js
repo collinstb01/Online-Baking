@@ -235,7 +235,7 @@ const DepositManual = () => {
                               <strong>Date </strong>
                             </label>
                             <input
-                              type="text"
+                              type="date"
                               className="form--control"
                               name="date"
                               placeholder="date"
