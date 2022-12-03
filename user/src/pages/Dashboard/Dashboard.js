@@ -118,7 +118,10 @@ const Dashboard = () => {
                   <span className="caption text-white mb-3">
                     Available Balance
                   </span>
-                  <h3 className="d-number text-white">{`$${user.user.accountBalance}`}</h3>
+                  <h3
+                    className="d-number"
+                    style={{ color: "green", fontWeight: "700" }}
+                  >{`$${user.user.accountBalance}`}</h3>
                 </div>
                 {/* d-widget end */}
               </div>
@@ -138,7 +141,7 @@ const Dashboard = () => {
                       <h3 className="d-number " style={{ color: "green" }}>
                         {Array.isArray(dr)
                           ? dr !== [] &&
-                            `${dr.reduce((x, y) => parseInt(x) + parseInt(y))}$`
+                            `$${dr.reduce((x, y) => parseInt(x) + parseInt(y))}`
                           : "Loading..."}
                       </h3>
                       <span className="caption text-white">Deposits</span>
@@ -164,7 +167,7 @@ const Dashboard = () => {
                         {" "}
                         {Array.isArray(dr)
                           ? tr !== [] &&
-                            `${tr.reduce((x, y) => parseInt(x) + parseInt(y))}$`
+                            `$${tr.reduce((x, y) => parseInt(x) + parseInt(y))}`
                           : "Loading..."}
                       </h3>
                       <span className="caption text-white">Withdrawals</span>
