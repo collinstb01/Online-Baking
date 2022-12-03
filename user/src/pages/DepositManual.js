@@ -135,8 +135,8 @@ const DepositManual = () => {
                         <div className="col-md-12 text-center">
                           <h3 className="text-center mt-2">
                             You have requested{" "}
-                            <b className="text--success">5000 USD</b> , Please
-                            pay <b className="text--success">5000 USD </b> with
+                            <b className="text--success">${depositData.amount && depositData.amount} USD</b> , Please
+                            pay <b className="text--success">${depositData.amount && depositData.amount} USD </b> with
                             charge{" "}
                           </h3>
                           <h4 className="text-center my-4">
