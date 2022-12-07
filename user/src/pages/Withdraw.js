@@ -65,7 +65,7 @@ const Withdraw = () => {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-6 text-center">
-                <h2 className="page-title text-white">My Withdrawals</h2>
+                <h2 className="page-title text-white">Approved Withdrawals</h2>
               </div>
             </div>
           </div>
@@ -81,7 +81,7 @@ const Withdraw = () => {
           <div className="container">
             <div className="row align-items-center mb-3">
               <div className="col-6">
-                <h6>My Withdrawal History</h6>
+                <h6>My Approved Withdrawal History</h6>
               </div>
               <div className="col-6 text-end">
                 <button

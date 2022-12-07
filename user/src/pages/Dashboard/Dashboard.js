@@ -139,10 +139,9 @@ const Dashboard = () => {
                   >
                     <div className="d-widget__content">
                       <h3 className="d-number " style={{ color: "green" }}>
-                        {Array.isArray(dr)
-                          ? dr !== [] &&
-                            `$${dr.reduce((x, y) => parseInt(x) + parseInt(y))}`
-                          : "Loading..."}
+                        {dr.length > 0
+                          ? `$${dr.reduce((x, y) => parseInt(x) + parseInt(y))}`
+                          : 0}
                       </h3>
                       <span className="caption text-white">Deposits</span>
                     </div>
@@ -165,10 +164,9 @@ const Dashboard = () => {
                     <div className="d-widget__content">
                       <h3 className="d-number " style={{ color: "red" }}>
                         {" "}
-                        {Array.isArray(dr)
-                          ? tr !== [] &&
-                            `$${tr.reduce((x, y) => parseInt(x) + parseInt(y))}`
-                          : "Loading..."}
+                        {tr.length > 0
+                          ? `$${tr.reduce((x, y) => parseInt(x) + parseInt(y))}`
+                          : 0}
                       </h3>
                       <span className="caption text-white">Withdrawals</span>
                     </div>

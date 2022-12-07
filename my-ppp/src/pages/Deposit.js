@@ -41,7 +41,7 @@ const Deposit = () => {
       });
       console.log(response.data);
       if (response.data) {
-        setmessage("updated, User has been credited" + " " + amount);
+        setmessage(`${status}, Transaction ${status}  ${amount}`);
       }
     } catch (error) {
       console.log(error);

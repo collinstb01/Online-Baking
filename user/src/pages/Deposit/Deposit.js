@@ -63,7 +63,7 @@ export const Deposit = () => {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-6 text-center">
-                <h2 className="page-title text-white">My Deposits</h2>
+                <h2 className="page-title text-white">Approved Deposits</h2>
               </div>
             </div>
           </div>
@@ -79,7 +79,7 @@ export const Deposit = () => {
           <div className="container">
             <div className="row align-items-center mb-3">
               <div className="col-lg-6">
-                <h6>My Deposit History</h6>
+                <h6>My Approved Deposit History</h6>
               </div>
               <div className="col-lg-6 text-lg-end">
                 <button

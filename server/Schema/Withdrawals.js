@@ -8,6 +8,10 @@ const WithdrawalSchema = mongoose.Schema(
     accName: {
       type: String,
     },
+    status: {
+      type: String,
+      default: "Transaction Pending",
+    },
     bankName: {
       type: String,
     },

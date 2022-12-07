@@ -73,22 +73,16 @@ const updateDepositStatus = async (req, res) => {
   console.log({ id, amount, userId });
   try {
     const user = await User.findById({ _id: userId });
-    const deposit = await Deposits.findById({ _id: id });
+    console.log(status);
     if (status == "rejected") {
-      await Deposits.updateOne(
-        { _id: id },
-        {
-          $set: {
-            status: "Rejected",
-          },
-        }
-      );
+      await Deposits.deleteOne({ _id: id });
+      // await Deposits.deleteOne({_id:  })
     } else {
       await Deposits.updateOne(
         { _id: id },
         {
           $set: {
-            status: "Confirmed",
+            status: "Transaction Approved",
           },
         }
       );
@@ -110,12 +104,11 @@ const updateDepositStatus = async (req, res) => {
           },
         }
       );
-      console.log(id);
       const some = await User.updateOne(
         { _id: userId, "transactions.$.id": id },
         {
           $set: {
-            status: "Approved",
+            status: "Transaction Approved",
             paid: true,
           },
         }

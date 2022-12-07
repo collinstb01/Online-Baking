@@ -24,7 +24,7 @@ const depositSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      default: "Pending",
+      default: "Transaction Pending",
     },
     paid: {
       type: String,
