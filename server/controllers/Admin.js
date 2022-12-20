@@ -126,6 +126,61 @@ const updateDepositStatus = async (req, res) => {
   }
 };
 
+const updateWithdrawalStatus = async (req, res) => {
+  const { id, amount, status, userId } = req.body;
+
+  console.log({ id, amount, userId });
+  try {
+    const user = await User.findById({ _id: userId });
+    console.log(status);
+    if (status == "rejected") {
+      await Withdrawal.deleteOne({ _id: id });
+      // await Deposits.deleteOne({_id:  })
+    } else {
+      await Withdrawal.updateOne(
+        { _id: id },
+        {
+          $set: {
+            status: "Transaction Approved",
+          },
+        }
+      );
+
+      await Withdrawal.updateOne(
+        { _id: id },
+        {
+          $set: {
+            paid: true,
+          },
+        }
+      );
+
+      await User.updateOne(
+        { _id: userId },
+        {
+          $set: {
+            accountBalance: parseInt(user.accountBalance) - parseInt(amount),
+          },
+        }
+      );
+
+      const userdata = user.transactions.find((val) => val.id == id);
+      console.log(userdata);
+
+      userdata.status = "Transaction Approved";
+      userdata.paid = true;
+
+      await User.findOneAndUpdate({ _id: userId }, user, { new: true });
+    }
+
+    console.log(user.accountBalance, amount);
+
+    return res.status(200).json({ message: "Successfully Updated" });
+  } catch (error) {
+    res.json({ message: error.message });
+    console.log(error);
+  }
+};
 const getDashboardData = async (req, res) => {
   try {
     const userLength = await User.count();
@@ -289,4 +344,5 @@ module.exports = {
   getSettings,
   createSettings,
   chnageDate,
+  updateWithdrawalStatus,
 };

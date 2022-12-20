@@ -11,6 +11,7 @@ const {
   getSettings,
   createSettings,
   chnageDate,
+  updateWithdrawalStatus,
 } = require("../controllers/Admin");
 
 const router = express.Router();
@@ -22,6 +23,7 @@ router.get("/get-deposits", getDeposits);
 router.get("/get-withdrawals", getWithdrawal);
 router.patch("/update-kyc", updateKycStatus);
 router.patch("/update-deposit", updateDepositStatus);
+router.patch("/update-withdrawals", updateWithdrawalStatus);
 router.get("/get-users", getUsers);
 router.post("/admin-setting", adminSettings);
 router.get("/get-setting", getSettings);

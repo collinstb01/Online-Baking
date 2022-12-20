@@ -112,20 +112,22 @@ const Withdraw = () => {
                     </thead>
                     <tbody>
                       {Array.isArray(user.withdrawals) ? (
-                        user.withdrawals.map((val) => (
-                          <tr>
-                            <td>
-                              {val.createdAt &&
-                                val.createdAt.toString().slice(0, 10)}
-                            </td>
-                            <td>{val.id}</td>
-                            <td>{val.accName}</td>
-                            <td>{val.BeneficiaryaccNo}</td>
-                            <td>{val.amount}$</td>
-                            <td>{val.routingNumber}</td>
-                            {/* <td>{`Pending`}</td> */}
-                          </tr>
-                        ))
+                        user.withdrawals
+                          .filter((val) => val.status != "Transaction Pending")
+                          .map((val) => (
+                            <tr>
+                              <td>
+                                {val.createdAt &&
+                                  val.createdAt.toString().slice(0, 10)}
+                              </td>
+                              <td>{val.id}</td>
+                              <td>{val.accName}</td>
+                              <td>{val.BeneficiaryaccNo}</td>
+                              <td>{val.amount}$</td>
+                              <td>{val.routingNumber}</td>
+                              {/* <td>{`Pending`}</td> */}
+                            </tr>
+                          ))
                       ) : (
                         <tr>
                           <td

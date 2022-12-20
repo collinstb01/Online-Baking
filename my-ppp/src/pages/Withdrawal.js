@@ -35,7 +35,7 @@ const Withdrawal = () => {
   const handlMake = async () => {
     setmessage("updating...");
     try {
-      const response = await axios.patch(`${link}/admin/update-deposit`, {
+      const response = await axios.patch(`${link}/admin/update-withdrawals`, {
         id,
         amount,
         status,
@@ -174,6 +174,29 @@ const Withdrawal = () => {
                 <Modal.Title>Payment Image</Modal.Title>
               </Modal.Header>
               <Modal.Body>
+                <div className="update">
+                  <h5>Make Changes to User Deposit Status</h5>
+                  <p>Immediately You Approve the user we be Sent the Money</p>
+                </div>
+                <Form.Select onChange={handleChange}>
+                  <option>Default select</option>
+                  {/* <option value="approve">Approve</option> */}
+                  <option value="approve">Approve</option>
+                  <option value="rejected">Reject</option>
+                </Form.Select>
+                <Button
+                  className="my-3"
+                  disabled={status == "" ? "true" : ""}
+                  onClick={handlMake}
+                >
+                  Make Deposit Changes
+                </Button>
+                <h5 className="my-3">{message}</h5>
+                <div className="mt-3">
+                  <h5>Payment Image</h5>
+                  <img src={imageString} className="payment__image mt-3" />
+                  <div className="amount mt-3">AMOUNT PAID: {amount}</div>
+                </div>
                 <div className="my-2">
                   <h1>Chnage Deposit Date</h1>
                   <input

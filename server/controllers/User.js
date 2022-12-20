@@ -496,8 +496,8 @@ const withdrawal = async (req, res) => {
       if (!code) {
         return res.status(401).json({ message: "Please Enter a code" });
       }
-      user.accountBalance =
-        parseInt(user.accountBalance) - parseInt(withdrawitem.amount);
+      // user.accountBalance =
+      //   parseInt(user.accountBalance) - parseInt(withdrawitem.amount);
       withdrawitem.otpCode = code;
 
       console.log(user);
@@ -538,7 +538,7 @@ const withdrawal = async (req, res) => {
                 amount: amount,
                 paymentType: "Transfer",
                 method: "SMARTSAVERS DEPOSIT",
-                status: "Transaction Approved",
+                status: "Transaction Pending",
                 date: new Date(),
               },
             },

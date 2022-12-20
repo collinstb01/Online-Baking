@@ -89,7 +89,7 @@ const WithdrawalForm = () => {
             <h1>Quick Money Transfer</h1>
             <div className="inputsboxes">
               <input
-                type="number"
+                type="text"
                 name="BeneficiaryaccNo"
                 value={formData.BeneficiaryaccNo}
                 onChange={handleChange}

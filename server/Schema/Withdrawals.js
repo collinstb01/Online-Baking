@@ -5,6 +5,10 @@ const WithdrawalSchema = mongoose.Schema(
     BeneficiaryaccNo: {
       type: String,
     },
+    paid: {
+      type: Boolean,
+      default: false,
+    },
     accName: {
       type: String,
     },
