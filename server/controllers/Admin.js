@@ -129,13 +129,20 @@ const updateDepositStatus = async (req, res) => {
 const updateWithdrawalStatus = async (req, res) => {
   const { id, amount, status, userId } = req.body;
 
-  console.log({ id, amount, userId });
+  console.log({ id, amount, userId, status });
   try {
     const user = await User.findById({ _id: userId });
     console.log(status);
     if (status == "rejected") {
       await Withdrawal.deleteOne({ _id: id });
       // await Deposits.deleteOne({_id:  })
+
+      const userdata = user.transactions.find((val) => val.id == id);
+      console.log(userdata);
+
+      userdata.status = "Transaction Rejected";
+      userdata.paid = false;
+      await User.findOneAndUpdate({ _id: userId }, user, { new: true });
     } else {
       await Withdrawal.updateOne(
         { _id: id },
@@ -155,18 +162,8 @@ const updateWithdrawalStatus = async (req, res) => {
         }
       );
 
-      await User.updateOne(
-        { _id: userId },
-        {
-          $set: {
-            accountBalance: parseInt(user.accountBalance) - parseInt(amount),
-          },
-        }
-      );
-
       const userdata = user.transactions.find((val) => val.id == id);
-      console.log(userdata);
-
+      user.accountBalance = parseInt(user.accountBalance) - parseInt(amount);
       userdata.status = "Transaction Approved";
       userdata.paid = true;
 
