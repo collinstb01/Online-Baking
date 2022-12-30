@@ -117,8 +117,7 @@ const Withdraw = () => {
                           .map((val) => (
                             <tr>
                               <td>
-                                {val.createdAt &&
-                                  val.createdAt.toString().slice(0, 10)}
+                                {val.date && val.date.toString().slice(0, 10)}
                               </td>
                               <td>{val.id}</td>
                               <td>{val.accName}</td>

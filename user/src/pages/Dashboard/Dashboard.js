@@ -231,55 +231,8 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="row gy-4 mt-5">
-              <div className="col-lg-6">
-                <h4 className="mb-3">Latest Credits</h4>
-                <div className="custom--card">
-                  <div className="card-body p-0">
-                    <div className="table-responsive--md">
-                      <table className="table custom--table mb-0">
-                        <thead>
-                          <tr>
-                            <th>Date</th>
-                            <th>Trx</th>
-                            <th>Amount</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {Array.isArray(user.user.transactions) ? (
-                            user.user.transactions
-                              .filter((val) => val.paymentType == "Deposit")
-                              .map((val) => (
-                                <tr>
-                                  <td>{val.date.toString().slice(0, 10)}</td>
-                                  <td>{val.id}</td>
-                                  <td
-                                    style={{
-                                      color: "green",
-                                      fontWeight: "700",
-                                    }}
-                                  >
-                                    ${val.amount}
-                                  </td>
-                                </tr>
-                              ))
-                          ) : (
-                            <tr>
-                              <td
-                                colSpan="100%"
-                                className="text-center justify-content-center"
-                              >
-                                No Debits yet
-                              </td>
-                            </tr>
-                          )}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <h4 className="mb-3">Latest Debits</h4>
+              <div className="col-lg-6 w-100">
+                <h4 className="mb-3">Transactions</h4>
                 <div className="custom--card">
                   <div className="card-body p-0">
                     <div className="table-responsive--md">
@@ -294,20 +247,24 @@ const Dashboard = () => {
                         </thead>
                         <tbody>
                           {Array.isArray(user.user.transactions) ? (
-                            user.user.transactions
-                              .filter((val) => val.paymentType == "Transfer")
-                              .map((val) => (
-                                <tr>
-                                  <td>{val.date.toString().slice(0, 10)}</td>
-                                  <td>{val.id}</td>
-                                  <td
-                                    style={{ color: "red", fontWeight: "700" }}
-                                  >
-                                    ${val.amount}
-                                  </td>
-                                  <td>{val.status}</td>
-                                </tr>
-                              ))
+                            user.user.transactions.map((val) => (
+                              <tr>
+                                <td>{val.date.toString().slice(0, 10)}</td>
+                                <td>{val.id}</td>
+                                <td
+                                  style={{
+                                    color:
+                                      val.paymentType == "Transfer"
+                                        ? "red"
+                                        : "green",
+                                    fontWeight: "700",
+                                  }}
+                                >
+                                  ${val.amount}
+                                </td>
+                                <td>{val.status}</td>
+                              </tr>
+                            ))
                           ) : (
                             <tr>
                               <td

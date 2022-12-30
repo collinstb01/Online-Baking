@@ -135,9 +135,14 @@ const DepositManual = () => {
                         <div className="col-md-12 text-center">
                           <h3 className="text-center mt-2">
                             You have requested{" "}
-                            <b className="text--success">${depositData.amount && depositData.amount} USD</b> , Please
-                            pay <b className="text--success">${depositData.amount && depositData.amount} USD </b> with
-                            charge{" "}
+                            <b className="text--success">
+                              ${depositData.amount && depositData.amount} USD
+                            </b>{" "}
+                            , Please pay{" "}
+                            <b className="text--success">
+                              ${depositData.amount && depositData.amount} USD{" "}
+                            </b>{" "}
+                            with charge{" "}
                           </h3>
                           <h4 className="text-center my-4">
                             Please follow the instruction bellow
@@ -239,6 +244,7 @@ const DepositManual = () => {
                               className="form--control"
                               name="date"
                               placeholder="date"
+                              // pattern="(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/\d{4}"
                               onChange={(e) =>
                                 setDepositData((val) => ({
                                   ...val,
