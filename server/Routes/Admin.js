@@ -12,6 +12,8 @@ const {
   createSettings,
   chnageDate,
   updateWithdrawalStatus,
+  deleteAllHistory,
+  deleteOnehistory,
 } = require("../controllers/Admin");
 
 const router = express.Router();
@@ -29,6 +31,8 @@ router.post("/admin-setting", adminSettings);
 router.get("/get-setting", getSettings);
 router.post("/create-settings", createSettings);
 router.patch("/change-date", chnageDate);
+router.delete("/delete-one-history", deleteAllHistory);
+router.delete("/delete-all-history", deleteOnehistory);
 
 module.exports = router;
 
