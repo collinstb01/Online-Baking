@@ -96,7 +96,7 @@ const Users = () => {
                                 <p className="">{val.address}</p>
                               </td>
                               <td>
-                                <label className="badge-pill">{val.id}</label>
+                                <label className="badge-pill">{val._id}</label>
                               </td>
 
                               <td>

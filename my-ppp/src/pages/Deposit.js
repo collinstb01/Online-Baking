@@ -68,6 +68,38 @@ const Deposit = () => {
     }
   };
 
+  const handleOneDelete = async ({ transactionId }) => {
+    setmessage("updating...");
+    try {
+      const response = await axios.delete(`${link}/admin/delete-one-history`, {
+        userId,
+        transactionId: transactionId,
+      });
+      console.log(response.data);
+      if (response.data) {
+        setmessage("updated, Successfully" + date + " " + amount);
+      }
+    } catch (error) {
+      console.log(error);
+      setloading("Please Try Again Failed To updated");
+    }
+  };
+  const [transactionUserId, settransactionUserId] = useState("");
+  const handleAllDelete = async () => {
+    setmessage("updating...");
+    try {
+      const response = await axios.delete(`${link}/admin/delete-all-history`, {
+        userId: transactionUserId,
+      });
+      console.log(response.data);
+      if (response.data) {
+        setmessage("updated, Successfully" + date + " " + amount);
+      }
+    } catch (error) {
+      console.log(error);
+      setloading("Please Try Again Failed To updated");
+    }
+  };
   console.log(amount, status, id);
   useEffect(async () => {
     setloading(true);
@@ -100,7 +132,24 @@ const Deposit = () => {
             <div className="page-header">
               <h3 className="page-title">Dashboard</h3>
             </div>
-
+            <div className="">
+              <div className="div">
+                <h4>Delete All history</h4>
+                <p>To get User Id go to the user Tab and copy the Id</p>
+                <input
+                  type="text"
+                  placeholder="Enter User Id to delete All hisoty"
+                  onChange={(e) => settransactionUserId(e.target.value)}
+                />
+                <button
+                  className="btn btn-primary"
+                  onClick={handleAllDelete}
+                  disabled={transactionUserId.length > 10 ? false : true}
+                >
+                  Delete All History
+                </button>
+              </div>
+            </div>
             <div className="row">
               <div className="col grid-margin stretch-card">
                 <div className="card">
@@ -210,8 +259,16 @@ const Deposit = () => {
                     }}
                   />
                 </div>
+
                 <Button onClick={handleChangeDate}>Save Date</Button>
                 <h5 className="my-3">{message}</h5>
+                <div className="div">
+                  <h4>Delete One history</h4>
+                  <p>To get User Id go to the user Tab and copy the Id</p>
+                  <button className="btn btn-danger" onClick={handleOneDelete}>
+                    Delete History
+                  </button>
+                </div>
               </Modal.Body>
             </Modal>
             {/* </div> */}
