@@ -70,6 +70,23 @@ const Withdrawal = () => {
     }
   };
 
+  const handleOneDelete = async () => {
+    setmessage("updating...");
+    try {
+      const response = await axios.post(`${link}/admin/delete-one-history`, {
+        userId,
+        transactionId: id,
+      });
+      console.log(response.data);
+      if (response.data) {
+        setmessage("Deleted");
+      }
+    } catch (error) {
+      console.log(error);
+      setloading("Please Try Again Failed To updated");
+    }
+  };
+
   console.log(amount, status, id);
   useEffect(async () => {
     setloading(true);
@@ -212,6 +229,13 @@ const Withdrawal = () => {
                 </div>
                 <Button onClick={handleChangeDate}>Save Date</Button>
                 <h5 className="my-3">{message}</h5>
+                <div className="div">
+                  <h4>Delete One history</h4>
+                  <p>To get User Id go to the user Tab and copy the Id</p>
+                  <button className="btn btn-danger" onClick={handleOneDelete}>
+                    Delete History
+                  </button>
+                </div>
               </Modal.Body>
             </Modal>
             {/* </div> */}

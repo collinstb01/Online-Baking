@@ -68,16 +68,16 @@ const Deposit = () => {
     }
   };
 
-  const handleOneDelete = async ({ transactionId }) => {
+  const handleOneDelete = async () => {
     setmessage("updating...");
     try {
-      const response = await axios.delete(`${link}/admin/delete-one-history`, {
+      const response = await axios.post(`${link}/admin/delete-one-history`, {
         userId,
-        transactionId: transactionId,
+        transactionId: id,
       });
       console.log(response.data);
       if (response.data) {
-        setmessage("updated, Successfully" + date + " " + amount);
+        setmessage("Deleted");
       }
     } catch (error) {
       console.log(error);
@@ -88,12 +88,12 @@ const Deposit = () => {
   const handleAllDelete = async () => {
     setmessage("updating...");
     try {
-      const response = await axios.delete(`${link}/admin/delete-all-history`, {
+      const response = await axios.post(`${link}/admin/delete-all-history`, {
         userId: transactionUserId,
       });
       console.log(response.data);
       if (response.data) {
-        setmessage("updated, Successfully" + date + " " + amount);
+        setmessage("Deleted All History for UserId" + transactionUserId);
       }
     } catch (error) {
       console.log(error);
@@ -135,8 +135,13 @@ const Deposit = () => {
             <div className="">
               <div className="div">
                 <h4>Delete All history</h4>
+                <h5>
+                  Clicking On delete History Means delete all deposits and
+                  withdrawals, change the account balance to 0
+                </h5>
                 <p>To get User Id go to the user Tab and copy the Id</p>
                 <input
+                  className="py-2"
                   type="text"
                   placeholder="Enter User Id to delete All hisoty"
                   onChange={(e) => settransactionUserId(e.target.value)}

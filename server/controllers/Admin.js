@@ -333,20 +333,22 @@ const chnageDate = async (req, res) => {
 const deleteOnehistory = async (req, res) => {
   const { userId, transactionId } = req.body;
   try {
+    console.log(userId);
     const user = await User.findOne({ _id: userId });
     const update = await Withdrawal.deleteOne({ _id: transactionId });
     const update2 = await Deposits.deleteOne({ _id: transactionId });
 
-    console.log(user);
+    console.log(user.transactions.length);
     console.log(update);
     console.log(update2);
 
-    user.transactions.filter((val) => val.id == transactionId);
+    const arr = user.transactions.filter((val) => val.id != transactionId);
 
+    user.transactions = arr;
     const updatedUser = await User.findByIdAndUpdate({ _id: userId }, user, {
       new: true,
     });
-    console.log(updatedUser);
+    console.log(updatedUser.transactions.length);
     return res.status(200).json({ message: "Successfully deleted" });
   } catch (error) {
     console.log(error);
@@ -359,7 +361,7 @@ const deleteAllHistory = async (req, res) => {
     const [user, updateOne, updateTwo] = await Promise.all([
       await User.findOne({ _id: userId }),
       await withdrawal.deleteMany({ id: userId }),
-      await User.deleteMany({ id: userId }),
+      await Deposits.deleteMany({ id: userId }),
     ]);
     console.log(user);
     console.log(updateOne);

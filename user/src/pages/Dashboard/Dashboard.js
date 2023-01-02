@@ -242,7 +242,7 @@ const Dashboard = () => {
                             <th>Date</th>
                             <th>Trx</th>
                             <th>Amount</th>
-                            <th>Status</th>
+                            {/* <th>Status</th> */}
                           </tr>
                         </thead>
                         <tbody>
@@ -262,7 +262,7 @@ const Dashboard = () => {
                                 >
                                   ${val.amount}
                                 </td>
-                                <td>{val.status}</td>
+                                {/* <td>{val.status}</td> */}
                               </tr>
                             ))
                           ) : (

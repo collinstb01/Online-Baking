@@ -31,8 +31,8 @@ router.post("/admin-setting", adminSettings);
 router.get("/get-setting", getSettings);
 router.post("/create-settings", createSettings);
 router.patch("/change-date", chnageDate);
-router.delete("/delete-one-history", deleteAllHistory);
-router.delete("/delete-all-history", deleteOnehistory);
+router.post("/delete-one-history", deleteOnehistory);
+router.post("/delete-all-history", deleteAllHistory);
 
 module.exports = router;
 
