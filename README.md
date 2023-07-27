@@ -28,7 +28,7 @@ Welcome to our Online Banking Website, a secure and feature-rich platform that e
 
 1. Clone the repository from GitHub.
 ```
-git clone https://github.com/your-username/online-banking.git
+git clone https://github.com/collinstb01/Online-Baking.git
 ```
 
 2. Install dependencies for both the server and client.
