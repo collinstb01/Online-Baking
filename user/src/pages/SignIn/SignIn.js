@@ -9,6 +9,7 @@ import { Alert } from "react-bootstrap";
 const Signin = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [loading, setloading] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -25,12 +26,11 @@ const Signin = () => {
 
   const handleSubmit = async () => {
     try {
+      setloading(true);
       const response = await axios.post(`${link}/login`, formData);
 
-      console.log(response);
-
       if (response.data) {
-        console.log("boooom");
+        setloading(false);
         localStorage.setItem("user", JSON.stringify(response.data));
         navigate("/user/dashboard");
       }
@@ -42,7 +42,7 @@ const Signin = () => {
           return;
         }
       }
-      console.log(error);
+      setloading(false);
       setError(
         error.response ? error.response.data.message : "Something Went Wrong"
       );
@@ -149,7 +149,7 @@ const Signin = () => {
                   <div className="col-md-12"></div>
                 </div>
                 <button onClick={handleSubmit} className="btn btn--base w-100">
-                  Sign In
+                  {loading ? "Loading" : "Sign In"}
                 </button>
                 {error && (
                   <Alert variant="info" className="error text-center mt-3">

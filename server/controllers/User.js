@@ -13,93 +13,93 @@ const Withdrawal = require("../Schema/Withdrawals");
 // Register User
 
 const registerUser = async (req, res) => {
-  const {
-    firstname,
-    lastname,
-    username,
-    email,
-    country,
-    mobile,
-    city,
-    zip,
-    address,
-    password,
-    password_confirmation,
-    agree,
-  } = req.body;
+  try {
+    const {
+      firstname,
+      lastname,
+      username,
+      email,
+      country,
+      mobile,
+      city,
+      zip,
+      address,
+      password,
+      password_confirmation,
+      agree,
+    } = req.body;
 
-  // Validation
-  if (
-    (!firstname,
-    !lastname,
-    !username,
-    !email,
-    !country,
-    !mobile,
-    !city,
-    !zip,
-    !address,
-    !password)
-  ) {
-    res.status(400);
-  }
-  if (password.length < 6) {
-    return res
-      .status(400)
-      .json({ message: "Password must be up to 6 characters" });
-  }
+    // Validation
+    if (
+      (!firstname,
+      !lastname,
+      !username,
+      !email,
+      !country,
+      !mobile,
+      !city,
+      !zip,
+      !address,
+      !password)
+    ) {
+      res.status(400).json({ message: "All fields are required" });
+    }
+    if (password.length < 6) {
+      return res
+        .status(400)
+        .json({ message: "Password must be up to 6 characters" });
+    }
 
-  if (password !== password_confirmation) {
-    return res.status(400).json({ message: "Password Doesnt Match" });
-  }
+    if (password !== password_confirmation) {
+      return res.status(400).json({ message: "Password Doesnt Match" });
+    }
 
-  if (agree != true) {
-    return res
-      .status(400)
-      .json({ message: "Please Agree to terms and Policy" });
-  }
+    if (agree != true) {
+      return res
+        .status(400)
+        .json({ message: "Please Agree to terms and Policy" });
+    }
 
-  // Check if user email already exists
-  const userExists = await User.findOne({ email });
+    // Check if user email already exists
+    const userExists = await User.findOne({ email });
 
-  if (userExists) {
-    return res
-      .status(400)
-      .json({ message: "Email has already been registered" });
-  }
+    if (userExists) {
+      return res
+        .status(400)
+        .json({ message: "Email has already been registered" });
+    }
 
-  const code = Math.floor(Math.random() * 899999 + 100000);
-  const generateNumber = Math.floor(
-    Math.random() * 899999999999999 + 100000000000000
-  );
-  console.log(code);
-  // Create new user
-  const user = await User.create({
-    name: `${firstname} ${lastname}`,
-    email,
-    password,
-    phone: mobile,
-    address,
-    country,
-    city,
-    username,
-    zip,
-    code: code,
-    accountNumber: generateNumber,
-  });
-
-  let name = `${firstname} ${lastname}`;
-  await sendEmailToUser(req, res, name, code, email);
-
-  //   Generate Token
-
-  if (user) {
-    return res.status(200).json({
-      message: "successful",
-      user,
+    const code = Math.floor(Math.random() * 899999 + 100000);
+    const generateNumber = Math.floor(
+      Math.random() * 899999999999999 + 100000000000000
+    );
+    console.log(code);
+    // Create new user
+    const user = await User.create({
+      name: `${firstname} ${lastname}`,
+      email,
+      password,
+      phone: mobile,
+      address,
+      country,
+      city,
+      username,
+      zip,
+      code: code,
+      accountNumber: generateNumber,
     });
-  } else {
-    return res.status(400).json({ message: error.message });
+
+    let name = `${firstname} ${lastname}`;
+    await sendEmailToUser(req, res, name, code, email);
+
+    if (user) {
+      return res.status(200).json({
+        message: "successful",
+        user,
+      });
+    }
+  } catch (error) {
+    return res.status(501).json({ message: error.message });
   }
 };
 
@@ -107,11 +107,12 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(password, email);
 
     // Validate Request
     if (!email || !password) {
-      return res.status(400).json({ message: "Please add email and password" });
+      return res
+        .status(400)
+        .json({ message: "Email and Password can not be empty" });
     }
 
     // Check if user exists
@@ -122,10 +123,12 @@ const loginUser = async (req, res) => {
     }
 
     // User exists, check if password is correct
+    // Not hashing password because is a personal project
     const isPasswordCorrect = password == user.password;
-    //   Generate Token
 
-    // Send HTTP-only cookie
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ message: "Incorrect Password" });
+    }
 
     if (user.emailVerifycation == false) {
       return res
@@ -133,13 +136,10 @@ const loginUser = async (req, res) => {
         .json({ message: "Please Verify Your Account", user });
     }
 
-    if (user && isPasswordCorrect) {
-      return res.status(200).json({ message: "Succesffully Logined", user });
-    } else {
-      return res.status(400).json({ message: "Invalid email or password" });
-    }
+    return res.status(200).json({ message: "Succesffully Logined", user });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ message: "Something went wrong", error });
   }
 };
 
@@ -194,11 +194,9 @@ const verifyCode = async (req, res) => {
   try {
     const update__user = await User.findOne({ _id: id });
 
-    console.log(update__user);
     if (update__user.code !== code) {
       return res.status(401).json({ message: "Code Not correct" });
     }
-    console.log(update__user);
 
     await User.updateOne(
       { _id: id },
@@ -209,8 +207,6 @@ const verifyCode = async (req, res) => {
       }
     );
     const user = await User.findOne({ _id: id });
-
-    console.log(updateUser);
 
     return res.status(200).json({ message: "Succesfully Verified", user });
   } catch (error) {

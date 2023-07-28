@@ -126,15 +126,31 @@ const Verify = () => {
                     >
                       Verify
                     </button>
-                    <h5
-                      className="font-bold mt-2"
-                      onClick={() => {
-                        localStorage.removeItem("user");
-                        navigate("/signup");
-                      }}
-                    >
-                      Create A New Account
-                    </h5>
+                    <div className="f">
+                      <span
+                        className=" mt-2"
+                        style={{
+                          color: "white",
+                          marginRight: "40px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          localStorage.removeItem("user");
+                          navigate("/signup");
+                        }}
+                      >
+                        New Account?
+                      </span>
+                      <span
+                        style={{ color: "white", cursor: "pointer" }}
+                        className="mt-2"
+                        onClick={() => {
+                          navigate("/user/dashboard");
+                        }}
+                      >
+                        Skip Verification
+                      </span>
+                    </div>
                     <Button
                       variant="secondary"
                       className="mt-xl-5 text-blue resend-code"

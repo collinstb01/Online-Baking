@@ -9,9 +9,9 @@ const PrivateRoute = ({ children }) => {
   if (!user) {
     return <Navigate to="/Login" state={{ from: history.location }} />;
   }
-  if (user.user.emailVerifycation == false) {
-    return <Navigate to="/authorization" state={{ from: history.location }} />;
-  }
+  // if (user.user.emailVerifycation == false) {
+  //   return <Navigate to="/authorization" state={{ from: history.location }} />;
+  // }
   return children;
 };
 

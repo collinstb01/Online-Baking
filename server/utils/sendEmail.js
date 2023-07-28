@@ -33,3 +33,22 @@ const sendEmail = async (subject, message, send_to, sent_from, reply_to) => {
 };
 
 module.exports = sendEmail;
+
+// <!DOCTYPE html>
+
+// <body>
+
+//   <div style="background-color: #80808080; padding: 10px 0px; width: 100%;color: white; text-align: center;">
+//     <img src="https://smartsavecontribution.com/assets/images/logoIcon/logo.png" alt="" style="width: 100px;">
+//     <h2>Hello {{name}}</h2>
+//     <p>Please use the Code to Verify Your Account</p>
+
+//     <h3>Your code is</h3>
+//     <h1>{{code}}</h1>
+//     <p>Regards...</p>
+//     <p>Smartsavers Team</p>
+//   </div>
+
+// </body>
+
+// </html>

@@ -8,6 +8,7 @@ import { link } from "../../constants/Link";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const [loading, setloading] = useState(false);
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     firstname: "",
@@ -34,17 +35,19 @@ const SignUp = () => {
   console.log(formData);
   const createAcc = async () => {
     try {
+      setloading(true);
       const response = await axios.post(`${link}/signup`, formData);
 
       console.log(response);
 
       if (response.data) {
-        console.log("boooom");
+        setloading(false);
         localStorage.setItem("user", JSON.stringify(response.data));
         navigate("/authorization");
       }
     } catch (error) {
       console.log(error);
+      setloading(false);
       setError(
         error.response
           ? error.response.data.message
@@ -1987,7 +1990,7 @@ const SignUp = () => {
                       //   type="submit"
                       className="btn btn--base text-white w-100"
                     >
-                      Sign Up
+                      {loading ? "Loading" : "Sign Up"}
                     </button>
                     {error && (
                       <Alert variant="info" className="error text-center mt-3">
