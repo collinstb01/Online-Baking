@@ -32,7 +32,10 @@ const Login = () => {
 
     try {
       setloading(true);
-      const response = await axios.post(`${link}/admin/login-admin`, formData);
+      const response = await axios.post(
+        `${link()}/admin/login-admin`,
+        formData
+      );
 
       console.log(response.data);
       if (response.data) {

@@ -1,1 +1,4 @@
-export const link = "https://rich-tan-codfish-cape.cyclic.app/api";
+export const link = () => {
+  const link = "https://rich-tan-codfish-cape.cyclic.app/api";
+  return link;
+};

@@ -20,7 +20,7 @@ export const Deposit = () => {
     if (id._id) {
       try {
         setloading(true);
-        const user = await axios.get(`${link}/getdeposit/${id._id}`);
+        const user = await axios.get(`${link()}/getdeposit/${id._id}`);
 
         if (user.data) {
           setUser(user.data);

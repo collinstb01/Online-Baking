@@ -32,7 +32,7 @@ const PasswordChange = () => {
   const handleUpdate = async () => {
     try {
       setloading(true);
-      const response = await axios.patch(`${link}/update-password`, formData);
+      const response = await axios.patch(`${link()}/update-password`, formData);
 
       if (response.data) {
         console.log(response.data);

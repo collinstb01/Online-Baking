@@ -16,7 +16,7 @@ const Verify = () => {
     const { user } = JSON.parse(localStorage.getItem("user"));
 
     try {
-      const response = await axios.post(`${link}/verify-code`, {
+      const response = await axios.post(`${link()}/verify-code`, {
         code,
         id: user._id,
       });
@@ -40,7 +40,7 @@ const Verify = () => {
   const handleClick = async () => {
     const { user } = JSON.parse(localStorage.getItem("user"));
     try {
-      const response = await axios.post(`${link}/resendcode`, {
+      const response = await axios.post(`${link()}/resendcode`, {
         email: user.email,
         id: user._id,
         name: user.name,

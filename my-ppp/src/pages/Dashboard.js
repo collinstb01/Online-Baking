@@ -20,7 +20,7 @@ const Dashboard = () => {
   useEffect(async () => {
     setloading(true);
     try {
-      const response = await axios.get(`${link}/admin//dashboard-data`);
+      const response = await axios.get(`${link()}/admin//dashboard-data`);
 
       console.log(response.data);
       setDataa(response.data);

@@ -35,7 +35,7 @@ const AdminSettings = () => {
   useEffect(async () => {
     setloading(true);
     try {
-      const response = await axios.get(`${link}/admin/get-setting`);
+      const response = await axios.get(`${link()}/admin/get-setting`);
 
       console.log(response.data);
       setDataa(response.data);
@@ -57,7 +57,7 @@ const AdminSettings = () => {
     try {
       setmessage("updating...");
       const response = await axios.post(
-        `${link}/admin/admin-setting`,
+        `${link()}/admin/admin-setting`,
         settings
       );
 

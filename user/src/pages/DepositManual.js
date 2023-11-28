@@ -26,7 +26,7 @@ const DepositManual = () => {
 
   console.log(depositData.id);
   const handleSubmit = async () => {
-    const response = await axios.post(`${link}/deposit`, depositData);
+    const response = await axios.post(`${link()}/deposit`, depositData);
     try {
       console.log(response);
 
@@ -43,7 +43,7 @@ const DepositManual = () => {
   useEffect(async () => {
     setloading(true);
     try {
-      const response = await axios.get(`${link}/getaccount`);
+      const response = await axios.get(`${link()}/getaccount`);
 
       console.log(response.data);
       setDataa(response.data);

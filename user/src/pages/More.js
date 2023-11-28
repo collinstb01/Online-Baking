@@ -27,7 +27,7 @@ const More = () => {
   const handleUpdate = async () => {
     try {
       setloading(true);
-      const response = await axios.patch(`${link}/update-user`, formData);
+      const response = await axios.patch(`${link()}/update-user`, formData);
 
       if (response.data) {
         console.log(response.data);
@@ -42,7 +42,7 @@ const More = () => {
     if (id) {
       try {
         setloading(true);
-        const user = await axios.get(`${link}/getuser/${id}`);
+        const user = await axios.get(`${link()}/getuser/${id}`);
 
         if (user.data) {
           setUser(user.data);

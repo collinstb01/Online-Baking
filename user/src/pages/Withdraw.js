@@ -23,7 +23,7 @@ const Withdraw = () => {
     if (id._id) {
       try {
         setloading(true);
-        const user = await axios.get(`${link}/getwithdrawal/${id._id}`);
+        const user = await axios.get(`${link()}/getwithdrawal/${id._id}`);
 
         if (user.data) {
           setUser(user.data);

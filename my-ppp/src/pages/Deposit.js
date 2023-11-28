@@ -33,7 +33,7 @@ const Deposit = () => {
   const handlMake = async () => {
     setmessage("updating...");
     try {
-      const response = await axios.patch(`${link}/admin/update-deposit`, {
+      const response = await axios.patch(`${link()}/admin/update-deposit`, {
         id,
         amount,
         status,
@@ -52,7 +52,7 @@ const Deposit = () => {
   const handleChangeDate = async () => {
     setmessage("updating...");
     try {
-      const response = await axios.patch(`${link}/admin/change-date`, {
+      const response = await axios.patch(`${link()}/admin/change-date`, {
         date,
         id,
         userId,
@@ -71,7 +71,7 @@ const Deposit = () => {
   const handleOneDelete = async () => {
     setmessage("updating...");
     try {
-      const response = await axios.post(`${link}/admin/delete-one-history`, {
+      const response = await axios.post(`${link()}/admin/delete-one-history`, {
         userId,
         transactionId: id,
       });
@@ -88,7 +88,7 @@ const Deposit = () => {
   const handleAllDelete = async () => {
     setmessage("updating...");
     try {
-      const response = await axios.post(`${link}/admin/delete-all-history`, {
+      const response = await axios.post(`${link()}/admin/delete-all-history`, {
         userId: transactionUserId,
       });
       console.log(response.data);
@@ -104,7 +104,7 @@ const Deposit = () => {
   useEffect(async () => {
     setloading(true);
     try {
-      const response = await axios.get(`${link}/admin/get-deposits`);
+      const response = await axios.get(`${link()}/admin/get-deposits`);
 
       console.log(response.data);
       setDataa(response.data);

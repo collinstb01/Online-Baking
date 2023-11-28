@@ -36,7 +36,7 @@ const SignUp = () => {
   const createAcc = async () => {
     try {
       setloading(true);
-      const response = await axios.post(`${link}/signup`, formData);
+      const response = await axios.post(`${link()}/signup`, formData);
 
       console.log(response);
 

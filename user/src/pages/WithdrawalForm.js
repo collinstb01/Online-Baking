@@ -33,7 +33,7 @@ const WithdrawalForm = () => {
     console.log("withdrawing");
     try {
       setloading(true);
-      const user = await axios.post(`${link}/withdraw`, formData);
+      const user = await axios.post(`${link()}/withdraw`, formData);
 
       if (user.data) {
         setUser(user.data);

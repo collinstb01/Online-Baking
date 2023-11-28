@@ -17,7 +17,7 @@ const Transactions = () => {
     if (id._id) {
       try {
         setloading(true);
-        const user = await axios.get(`${link}/getuser/${id._id}`);
+        const user = await axios.get(`${link()}/getuser/${id._id}`);
 
         if (user.data) {
           setUser(user.data);

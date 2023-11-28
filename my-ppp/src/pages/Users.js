@@ -34,7 +34,7 @@ const Users = () => {
   useEffect(async () => {
     setloading(true);
     try {
-      const response = await axios.get(`${link}/admin/get-users`);
+      const response = await axios.get(`${link()}/admin/get-users`);
 
       console.log(response.data);
       setDataa(response.data);

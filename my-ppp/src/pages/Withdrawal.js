@@ -35,7 +35,7 @@ const Withdrawal = () => {
   const handlMake = async () => {
     setmessage("updating...");
     try {
-      const response = await axios.patch(`${link}/admin/update-withdrawals`, {
+      const response = await axios.patch(`${link()}/admin/update-withdrawals`, {
         id,
         amount,
         status,
@@ -54,7 +54,7 @@ const Withdrawal = () => {
   const handleChangeDate = async () => {
     setmessage("updating...");
     try {
-      const response = await axios.patch(`${link}/admin/change-date`, {
+      const response = await axios.patch(`${link()}/admin/change-date`, {
         date,
         id,
         userId,
@@ -73,7 +73,7 @@ const Withdrawal = () => {
   const handleOneDelete = async () => {
     setmessage("updating...");
     try {
-      const response = await axios.post(`${link}/admin/delete-one-history`, {
+      const response = await axios.post(`${link()}/admin/delete-one-history`, {
         userId,
         transactionId: id,
       });
@@ -91,7 +91,7 @@ const Withdrawal = () => {
   useEffect(async () => {
     setloading(true);
     try {
-      const response = await axios.get(`${link}/admin/get-withdrawals`);
+      const response = await axios.get(`${link()}/admin/get-withdrawals`);
 
       console.log(response.data);
       setDataa(response.data);
