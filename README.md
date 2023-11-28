@@ -35,7 +35,7 @@ git clone https://github.com/collinstb01/Online-Baking.git
 ```
 cd online-banking
 cd server && npm install
-cd ../client && npm install
+cd ../user && npm install
 ```
 
 3. Set up the environment variables for database connection and other configurations.
@@ -47,7 +47,7 @@ cd server && npm start
 
 5. Launch the client application.
 ```
-cd ../client && npm start
+cd ../user && npm start
 ```
 
 **Contributing:**
